@@ -4,6 +4,9 @@ from django.core.validators import FileExtensionValidator
 from account.models import User
 from core.image_validator import file_size
 from django.contrib.auth import get_user_model
+from django.db.models import (
+    F
+)
 
 User = get_user_model()
 
@@ -57,15 +60,20 @@ class WarehouseRequest(models.Model):
 
 class Stock(models.Model):
     warehouse = models.ForeignKey(
-        Warehouse, null=True, on_delete=models.CASCADE, related_name="stocks")
+        Warehouse, on_delete=models.CASCADE, related_name="stocks")
     product = models.ForeignKey(
-        "product.Product", null=True, on_delete=models.CASCADE, related_name="stocks")
+        "product.Product", on_delete=models.CASCADE, related_name="stocks")
     quantity = models.IntegerField(default=0)
     date = models.DateField(auto_now=True, blank=True)
     note = models.TextField(default="", null=True, blank=True)
 
     class Meta:
         ordering = ("pk",)
+        constraints = [
+            models.UniqueConstraint(
+                fields=["warehouse", "product"], name="unique name for your constraint"
+            )
+        ]
         default_permissions = []
         permissions = (
             ("view_stock", "Mövcud stoklara baxa bilər"),
@@ -73,6 +81,15 @@ class Stock(models.Model):
             ("change_stock", "Stok məlumatlarını yeniləyə bilər"),
             ("delete_stock", "Stok silə bilər")
         )
+
+    def increase_stock(self, quantity: int):
+        """Return given quantity of product to a stock."""
+        self.quantity = F("quantity") + quantity
+        self.save(update_fields=["quantity"])
+
+    def decrease_stock(self, quantity: int):
+        self.quantity = F("quantity") - quantity
+        self.save(update_fields=["quantity"])
 
     def __str__(self) -> str:
         return f"stock -> {self.warehouse} - {self.product} - {self.quantity}"
