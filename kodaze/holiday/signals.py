@@ -14,267 +14,270 @@ from .models import (
 )
 
 # Holding working_day ---------------------------------------------------
+
+
 @receiver(post_save, sender=Holding)
 def holding_working_day_create(sender, instance, created, **kwargs):
-    """
-    İş və tətil günlərini create edən task
-    """
     if created:
         holding = instance
-        indi = datetime.date.today()
+        now = datetime.date.today()
 
-        d = pd.to_datetime(f"{indi.year}-{indi.month}-{1}")
+        d = pd.to_datetime(f"{now.year}-{now.month}-{1}")
 
         next_m = d + pd.offsets.MonthBegin(1)
 
-        days_in_this_month = pd.Period(f"{indi.year}-{indi.month}-{1}").days_in_month
+        days_in_this_month = pd.Period(
+            f"{now.year}-{now.month}-{1}").days_in_month
 
-        days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
+        days_in_month = pd.Period(
+            f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-        holding_working_day = HoldingWorkingDay.objects.filter(
-            holding = holding,
-            tarix__year = next_m.year,
-            tarix__month = next_m.month
+        holding_working_day = HoldingWorkingDay.objects.select_related("holding").filter(
+            holding=holding,
+            date__year=next_m.year,
+            date__month=next_m.month
         )
         if len(holding_working_day) == 0:
             holding_working_day = HoldingWorkingDay.objects.create(
-                holding = holding,
+                holding=holding,
                 working_days_count=days_in_month,
-                date = f"{next_m.year}-{next_m.month}-{1}"
+                date=f"{next_m.year}-{next_m.month}-{1}"
             )
             holding_working_day.save()
-        
-        holding_working_day = HoldingWorkingDay.objects.filter(
-            holding = holding,
-            tarix__year = indi.year,
-            tarix__month = indi.month
+
+        holding_working_day = HoldingWorkingDay.objects.select_related("holding").filter(
+            holding=holding,
+            date__year=now.year,
+            date__month=now.month
         )
         if len(holding_working_day) == 0:
             holding_working_day = HoldingWorkingDay.objects.create(
-                holding = holding,
+                holding=holding,
                 working_days_count=days_in_this_month,
-                date = f"{indi.year}-{indi.month}-{1}"
+                date=f"{now.year}-{now.month}-{1}"
             )
             holding_working_day.save()
 
 # Company working_day ---------------------------------------------------
+
+
 @receiver(post_save, sender=Company)
 def company_working_day_create(sender, instance, created, **kwargs):
-    """
-    İş və tətil günlərini create edən task
-    """
     if created:
         company = instance
-        indi = datetime.date.today()
+        now = datetime.date.today()
 
-        d = pd.to_datetime(f"{indi.year}-{indi.month}-{1}")
+        d = pd.to_datetime(f"{now.year}-{now.month}-{1}")
 
         next_m = d + pd.offsets.MonthBegin(1)
 
-        days_in_this_month = pd.Period(f"{indi.year}-{indi.month}-{1}").days_in_month
+        days_in_this_month = pd.Period(
+            f"{now.year}-{now.month}-{1}").days_in_month
 
-        days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
+        days_in_month = pd.Period(
+            f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-    
-        company_working_day = CompanyWorkingDay.objects.filter(
-            company = company,
-            tarix__year = next_m.year,
-            tarix__month = next_m.month
+        company_working_day = CompanyWorkingDay.objects.select_related("company").filter(
+            company=company,
+            date__year=next_m.year,
+            date__month=next_m.month
         )
         if len(company_working_day) == 0:
             company_working_day = CompanyWorkingDay.objects.create(
-                company = company,
+                company=company,
                 working_days_count=days_in_month,
-                date = f"{next_m.year}-{next_m.month}-{1}"
+                date=f"{next_m.year}-{next_m.month}-{1}"
             )
             company_working_day.save()
-        
-        company_working_day = CompanyWorkingDay.objects.filter(
-            company = company,
-            tarix__year = indi.year,
-            tarix__month = indi.month
+
+        company_working_day = CompanyWorkingDay.objects.select_related("company").filter(
+            company=company,
+            date__year=now.year,
+            date__month=now.month
         )
         if len(company_working_day) == 0:
             company_working_day = CompanyWorkingDay.objects.create(
-                company = company,
+                company=company,
                 working_days_count=days_in_this_month,
-                date = f"{indi.year}-{indi.month}-{1}"
+                date=f"{now.year}-{now.month}-{1}"
             )
             company_working_day.save()
 
 # Office working_day ---------------------------------------------------
+
+
 @receiver(post_save, sender=Office)
 def office_working_day_create(sender, instance, created, **kwargs):
-    """
-    İş və tətil günlərini create edən task
-    """
     if created:
         office = instance
-        indi = datetime.date.today()
+        now = datetime.date.today()
 
-        d = pd.to_datetime(f"{indi.year}-{indi.month}-{1}")
+        d = pd.to_datetime(f"{now.year}-{now.month}-{1}")
 
         next_m = d + pd.offsets.MonthBegin(1)
 
-        days_in_this_month = pd.Period(f"{indi.year}-{indi.month}-{1}").days_in_month
+        days_in_this_month = pd.Period(
+            f"{now.year}-{now.month}-{1}").days_in_month
 
-        days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
+        days_in_month = pd.Period(
+            f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-        office_working_day = OfficeWorkingDay.objects.filter(
-            office = office,
-            tarix__year = next_m.year,
-            tarix__month = next_m.month
+        office_working_day = OfficeWorkingDay.objects.select_related("office").filter(
+            office=office,
+            date__year=next_m.year,
+            date__month=next_m.month
         )
         if len(office_working_day) == 0:
             office_working_day = OfficeWorkingDay.objects.create(
-                office = office,
+                office=office,
                 working_days_count=days_in_month,
-                date = f"{next_m.year}-{next_m.month}-{1}"
+                date=f"{next_m.year}-{next_m.month}-{1}"
             )
             office_working_day.save()
 
-    
-        office_working_day = OfficeWorkingDay.objects.filter(
-            office = office,
-            tarix__year = indi.year,
-            tarix__month = indi.month
+        office_working_day = OfficeWorkingDay.objects.select_related("office").filter(
+            office=office,
+            date__year=now.year,
+            date__month=now.month
         )
         if len(office_working_day) == 0:
             office_working_day = OfficeWorkingDay.objects.create(
-                office = office,
+                office=office,
                 working_days_count=days_in_this_month,
-                date = f"{indi.year}-{indi.month}-{1}"
+                date=f"{now.year}-{now.month}-{1}"
             )
             office_working_day.save()
 
 # Department working_day ---------------------------------------------------
+
+
 @receiver(post_save, sender=Department)
 def department_working_day_create(sender, instance, created, **kwargs):
-    """
-    İş və tətil günlərini create edən task
-    """
     if created:
         department = instance
-        indi = datetime.date.today()
+        now = datetime.date.today()
 
-        d = pd.to_datetime(f"{indi.year}-{indi.month}-{1}")
+        d = pd.to_datetime(f"{now.year}-{now.month}-{1}")
 
         next_m = d + pd.offsets.MonthBegin(1)
 
-        days_in_this_month = pd.Period(f"{indi.year}-{indi.month}-{1}").days_in_month
+        days_in_this_month = pd.Period(
+            f"{now.year}-{now.month}-{1}").days_in_month
 
-        days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
+        days_in_month = pd.Period(
+            f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-        department_working_day = DepartmentWorkingDay.objects.filter(
-            department = department,
-            tarix__year = next_m.year,
-            tarix__month = next_m.month
+        department_working_day = DepartmentWorkingDay.objects.select_related("department").filter(
+            department=department,
+            date__year=next_m.year,
+            date__month=next_m.month
         )
         if len(department_working_day) == 0:
             department_working_day = DepartmentWorkingDay.objects.create(
-                department = department,
+                department=department,
                 working_days_count=days_in_month,
-                date = f"{next_m.year}-{next_m.month}-{1}"
+                date=f"{next_m.year}-{next_m.month}-{1}"
             )
             department_working_day.save()
-        department_working_day = DepartmentWorkingDay.objects.filter(
-            department = department,
-            tarix__year = indi.year,
-            tarix__month = indi.month
+        department_working_day = DepartmentWorkingDay.objects.select_related("department").filter(
+            department=department,
+            date__year=now.year,
+            date__month=now.month
         )
         if len(department_working_day) == 0:
             department_working_day = DepartmentWorkingDay.objects.create(
-                department = department,
+                department=department,
                 working_days_count=days_in_this_month,
-                date = f"{indi.year}-{indi.month}-{1}"
+                date=f"{now.year}-{now.month}-{1}"
             )
             department_working_day.save()
 
 # Team working_day ---------------------------------------------------
+
+
 @receiver(post_save, sender=Team)
 def team_working_day_create(sender, instance, created, **kwargs):
-    """
-    İş və tətil günlərini create edən task
-    """
     if created:
         team = instance
-        indi = datetime.date.today()
+        now = datetime.date.today()
 
-        d = pd.to_datetime(f"{indi.year}-{indi.month}-{1}")
+        d = pd.to_datetime(f"{now.year}-{now.month}-{1}")
 
         next_m = d + pd.offsets.MonthBegin(1)
 
-        days_in_this_month = pd.Period(f"{indi.year}-{indi.month}-{1}").days_in_month
+        days_in_this_month = pd.Period(
+            f"{now.year}-{now.month}-{1}").days_in_month
 
-        days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
+        days_in_month = pd.Period(
+            f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-        team_working_day = TeamWorkingDay.objects.filter(
-            team = team,
-            tarix__year = next_m.year,
-            tarix__month = next_m.month
+        team_working_day = TeamWorkingDay.objects.select_related("team").filter(
+            team=team,
+            date__year=next_m.year,
+            date__month=next_m.month
         )
         if len(team_working_day) == 0:
             team_working_day = TeamWorkingDay.objects.create(
-                team = team,
+                team=team,
                 working_days_count=days_in_month,
-                date = f"{next_m.year}-{next_m.month}-{1}"
+                date=f"{next_m.year}-{next_m.month}-{1}"
             )
             team_working_day.save()
-    
-        team_working_day = TeamWorkingDay.objects.filter(
-            team = team,
-            tarix__year = indi.year,
-            tarix__month = indi.month
+
+        team_working_day = TeamWorkingDay.objects.select_related("team").filter(
+            team=team,
+            date__year=now.year,
+            date__month=now.month
         )
         if len(team_working_day) == 0:
             team_working_day = TeamWorkingDay.objects.create(
-                team = team,
+                team=team,
                 working_days_count=days_in_this_month,
-                date = f"{indi.year}-{indi.month}-{1}"
+                date=f"{now.year}-{now.month}-{1}"
             )
             team_working_day.save()
 
 # Position working_day ---------------------------------------------------
+
+
 @receiver(post_save, sender=Position)
 def position_working_day_create(sender, instance, created, **kwargs):
-    """
-    İş və tətil günlərini create edən task
-    """
     if created:
         position = instance
-        indi = datetime.date.today()
+        now = datetime.date.today()
 
-        d = pd.to_datetime(f"{indi.year}-{indi.month}-{1}")
+        d = pd.to_datetime(f"{now.year}-{now.month}-{1}")
 
         next_m = d + pd.offsets.MonthBegin(1)
 
-        days_in_this_month = pd.Period(f"{indi.year}-{indi.month}-{1}").days_in_month
+        days_in_this_month = pd.Period(
+            f"{now.year}-{now.month}-{1}").days_in_month
 
-        days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
+        days_in_month = pd.Period(
+            f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-
-        position_working_day = PositionWorkingDay.objects.filter(
-            position = position,
-            tarix__year = next_m.year,
-            tarix__month = next_m.month
+        position_working_day = PositionWorkingDay.objects.select_related("position").filter(
+            position=position,
+            date__year=next_m.year,
+            date__month=next_m.month
         )
         if len(position_working_day) == 0:
             position_working_day = PositionWorkingDay.objects.create(
-                position = position,
+                position=position,
                 working_days_count=days_in_month,
-                date = f"{next_m.year}-{next_m.month}-{1}"
+                date=f"{next_m.year}-{next_m.month}-{1}"
             )
             position_working_day.save()
-    
-        position_working_day = PositionWorkingDay.objects.filter(
-            position = position,
-            tarix__year =  indi.year,
-            tarix__month = indi.month
+
+        position_working_day = PositionWorkingDay.objects.select_related("position").filter(
+            position=position,
+            date__year=now.year,
+            date__month=now.month
         )
         if len(position_working_day) == 0:
             position_working_day = PositionWorkingDay.objects.create(
-                position = position,
+                position=position,
                 working_days_count=days_in_this_month,
-                date = f"{indi.year}-{indi.month}-{1}"
+                date=f"{now.year}-{now.month}-{1}"
             )
             position_working_day.save()

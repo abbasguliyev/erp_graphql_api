@@ -1,7 +1,7 @@
 import django
 from django.db import models
 
-# Create your models here.
+from account.models import Customer
 
 
 class Service(models.Model):
@@ -9,9 +9,11 @@ class Service(models.Model):
     loan_term = models.IntegerField(default=0, blank=True)
     discount = models.FloatField(default=0, blank=True)
     contract = models.ForeignKey(
-        "contract.Contract", related_name="services", null=True, on_delete=models.CASCADE)
+        "contract.Contract", related_name="services", null=True, blank=True, on_delete=models.CASCADE)
     product = models.ManyToManyField(
         "product.Product", related_name="services")
+    customer = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, null=True, blank=True, related_name="services")
     service_date = models.DateField(
         default=django.utils.timezone.now, blank=True)
     is_done = models.BooleanField(default=False)

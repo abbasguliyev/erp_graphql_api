@@ -12,9 +12,9 @@ User = get_user_model()
 @shared_task(name='create_services_task')
 def create_services_task(id):
     instance = Contract.objects.get(id=id)
-    indi = instance.contract_date
+    now = instance.contract_date
 
-    d = pd.to_datetime(f"{indi.day}-{indi.month}-{indi.year}")
+    d = pd.to_datetime(f"{now.day}-{now.month}-{now.year}")
     month6 = pd.date_range(start=d, periods=2, freq='6M')[1]
     month12 = pd.date_range(start=d, periods=2, freq='12M')[1]
     month18 = pd.date_range(start=d, periods=2, freq='18M')[1]
@@ -26,16 +26,16 @@ def create_services_task(id):
     kartric24ay = Product.objects.filter(kartric_novu="KARTRIC24AY", company=instance.company)
 
     date_format = '%d-%m-%Y'
-    kartric6ay_date_lt_29 = datetime.datetime.strptime(f"{indi.day}-{month6.month}-{month6.year}", date_format)
+    kartric6ay_date_lt_29 = datetime.datetime.strptime(f"{now.day}-{month6.month}-{month6.year}", date_format)
     kartric6ay_date_eq_29_30_31 = datetime.datetime.strptime(f"{month6.day}-{month6.month}-{month6.year}", date_format)
 
-    kartric12ay_date_lt_29 = datetime.datetime.strptime(f"{indi.day}-{month12.month}-{month12.year}", date_format)
+    kartric12ay_date_lt_29 = datetime.datetime.strptime(f"{now.day}-{month12.month}-{month12.year}", date_format)
     kartric12ay_date_eq_29_30_31 = datetime.datetime.strptime(f"{month12.day}-{month12.month}-{month12.year}", date_format)
 
-    kartric18ay_date_lt_29 = datetime.datetime.strptime(f"{indi.day}-{month18.month}-{month18.year}", date_format)
+    kartric18ay_date_lt_29 = datetime.datetime.strptime(f"{now.day}-{month18.month}-{month18.year}", date_format)
     kartric18ay_date_eq_29_30_31 = datetime.datetime.strptime(f"{month18.day}-{month18.month}-{month18.year}", date_format)
 
-    kartric24ay_date_lt_29 = datetime.datetime.strptime(f"{indi.day}-{month24.month}-{month24.year}", date_format)
+    kartric24ay_date_lt_29 = datetime.datetime.strptime(f"{now.day}-{month24.month}-{month24.year}", date_format)
     kartric24ay_date_eq_29_30_31 = datetime.datetime.strptime(f"{month24.day}-{month24.month}-{month24.year}", date_format)
 
     q = 0
@@ -44,22 +44,22 @@ def create_services_task(id):
             price = 0
             for j in kartric6ay:
                 price += float(j.price)
-            if(indi.day < 29):
+            if(now.day < 29):
                 service = Service.objects.create(
                     contract=instance,
                     service_date = kartric6ay_date_lt_29,
                     price=price,
                     is_auto=True
                 )
-            elif(indi.day == 31 or indi.day == 30 or indi.day == 29):
-                if(month6.day <= indi.day):
+            elif(now.day == 31 or now.day == 30 or now.day == 29):
+                if(month6.day <= now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric6ay_date_eq_29_30_31,
                         price=price,
                         is_auto=True
                     )
-                elif(month6.day > indi.day):
+                elif(month6.day > now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric6ay_date_lt_29,
@@ -72,22 +72,22 @@ def create_services_task(id):
             price = 0
             for j in kartric12ay:
                 price += float(j.price)
-            if(indi.day < 29):
+            if(now.day < 29):
                 service = Service.objects.create(
                     contract=instance,
                     service_date = kartric12ay_date_lt_29,
                     price=price,
                     is_auto=True
                 )
-            elif(indi.day == 31 or indi.day == 30 or indi.day == 29):
-                if(month12.day <= indi.day):
+            elif(now.day == 31 or now.day == 30 or now.day == 29):
+                if(month12.day <= now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric12ay_date_eq_29_30_31,
                         price=price,
                         is_auto=True
                     )
-                elif(month12.day > indi.day):
+                elif(month12.day > now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric12ay_date_lt_29,
@@ -100,22 +100,22 @@ def create_services_task(id):
             price = 0
             for j in kartric18ay:
                 price += float(j.price)
-            if(indi.day < 29):
+            if(now.day < 29):
                 service = Service.objects.create(
                     contract=instance,
                     service_date = kartric18ay_date_lt_29,
                     price=price,
                     is_auto=True
                 )
-            elif(indi.day == 31 or indi.day == 30 or indi.day == 29):
-                if(month18.day <= indi.day):
+            elif(now.day == 31 or now.day == 30 or now.day == 29):
+                if(month18.day <= now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric18ay_date_eq_29_30_31,
                         price=price,
                         is_auto=True
                     )
-                elif(month18.day > indi.day):
+                elif(month18.day > now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric18ay_date_lt_29,
@@ -128,22 +128,22 @@ def create_services_task(id):
             price = 0
             for j in kartric24ay:
                 price += float(j.price)
-            if(indi.day < 29):
+            if(now.day < 29):
                 service = Service.objects.create(
                     contract=instance,
                     service_date = kartric24ay_date_lt_29,
                     price=price,
                     is_auto=True
                 )
-            elif(indi.day == 31 or indi.day == 30 or indi.day == 29):
-                if(month24.day <= indi.day):
+            elif(now.day == 31 or now.day == 30 or now.day == 29):
+                if(month24.day <= now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric24ay_date_eq_29_30_31,
                         price=price,
                         is_auto=True
                     )
-                elif(month24.day > indi.day):
+                elif(month24.day > now.day):
                     service = Service.objects.create(
                         contract=instance,
                         service_date = kartric24ay_date_lt_29,

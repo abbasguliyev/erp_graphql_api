@@ -3,7 +3,7 @@ from .models import (
     Contract,
     ContractGift, 
     Installment, 
-    Deyisim, 
+    ContractChange, 
     DemoSales
 )
 class InstallmentAdmin(admin.ModelAdmin):
@@ -22,6 +22,6 @@ class InstallmentAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Contract)
 admin.site.register(ContractGift)
-admin.site.register(Deyisim)
+admin.site.register(ContractChange)
 admin.site.register(Installment, InstallmentAdmin)
 admin.site.register(DemoSales)

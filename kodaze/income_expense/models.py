@@ -23,7 +23,7 @@ class HoldingCashboxIncome(AbstractIncomeExpense):
     image_of_receipt = None
     executor = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True,
                                  related_name="user_holding_income")
-    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE, null=True,
+    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE,
                                         related_name="holding_cashbox_income")
 
     class Meta:
@@ -42,7 +42,7 @@ class HoldingCashboxIncome(AbstractIncomeExpense):
 class HoldingCashboxExpense(AbstractIncomeExpense):
     executor = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True,
                                  related_name="user_holding_expense")
-    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE, null=True,
+    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE,
                                         related_name="holding_cashbox_expense")
 
     class Meta:
@@ -64,7 +64,7 @@ class CompanyCashboxIncome(AbstractIncomeExpense):
     image_of_receipt = None
     executor = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True,
                                  related_name="user_company_income")
-    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE, null=True,
+    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE,
                                         related_name="company_cashbox_income")
 
     class Meta:
@@ -83,7 +83,7 @@ class CompanyCashboxIncome(AbstractIncomeExpense):
 class CompanyCashboxExpense(AbstractIncomeExpense):
     executor = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True,
                                  related_name="user_company_expense")
-    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE, null=True,
+    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE,
                                         related_name="company_cashbox_expense")
 
     class Meta:
@@ -106,17 +106,17 @@ class OfficeKassaIncome(AbstractIncomeExpense):
     executor = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True,
                                  related_name="user_office_income")
     office_cashbox = models.ForeignKey(
-        "cashbox.OfficeCashbox", on_delete=models.CASCADE, null=True, related_name="office_cashbox_income")
+        "cashbox.OfficeCashbox", on_delete=models.CASCADE, related_name="office_cashbox_income")
 
     class Meta:
         ordering = ("-pk",)
         default_permissions = []
         permissions = (
-            ("view_officecashboxincome", "Mövcud office kassa mədaxillərə baxa bilər"),
-            ("add_officecashboxincome", "Office kassa mədaxil əlavə edə bilər"),
+            ("view_officecashboxincome", "Mövcud ofis kassa mədaxillərə baxa bilər"),
+            ("add_officecashboxincome", "Ofis kassa mədaxil əlavə edə bilər"),
             ("change_officecashboxincome",
-             "Office kassa mədaxil məlumatlarını yeniləyə bilər"),
-            ("delete_officecashboxincome", "Office kassa mədaxil silə bilər")
+             "Ofis kassa mədaxil məlumatlarını yeniləyə bilər"),
+            ("delete_officecashboxincome", "Ofis kassa mədaxil silə bilər")
         )
 
 
@@ -124,7 +124,7 @@ class OfficeKassaExpense(AbstractIncomeExpense):
     executor = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True,
                                  related_name="user_office_expense")
     office_cashbox = models.ForeignKey(
-        "cashbox.OfficeCashbox", on_delete=models.CASCADE, null=True, related_name="office_cashbox_expense")
+        "cashbox.OfficeCashbox", on_delete=models.CASCADE,  related_name="office_cashbox_expense")
 
     class Meta:
         ordering = ("-pk",)

@@ -59,7 +59,7 @@ class Office(AbstractCompany):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_office", "Mövcud officelərə baxa bilər"),
+            ("view_office", "Mövcud ofislərə baxa bilər"),
             ("add_office", "Ofis əlavə edə bilər"),
             ("change_office", "Ofis məlumatlarını yeniləyə bilər"),
             ("delete_office", "Ofis silə bilər")
@@ -88,6 +88,7 @@ class Department(AbstractCompany):
 
 
 class Position(AbstractCompany):
+    name = models.CharField(max_length=200, unique=True)
     def save(self, *args, **kwargs) -> None:
         self.name = self.name.upper()
         return super(Position, self).save(*args, **kwargs)
@@ -113,10 +114,10 @@ class Team(AbstractCompany):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_team", "Mövcud teamlara baxa bilər"),
-            ("add_team", "Team əlavə edə bilər"),
-            ("change_team", "Team məlumatlarını yeniləyə bilər"),
-            ("delete_team", "Team silə bilər")
+            ("view_team", "Mövcud komandalara baxa bilər"),
+            ("add_team", "Komanda əlavə edə bilər"),
+            ("change_team", "Komanda məlumatlarını yeniləyə bilər"),
+            ("delete_team", "Komanda silə bilər")
         )
 
     def __str__(self):
@@ -150,8 +151,8 @@ class AppLogo(models.Model):
     class Meta:
         default_permissions = []
         permissions = (
-            ("view_logo", "Logoya baxa bilər"),
-            ("add_logo", "Logo əlavə edə bilər"),
-            ("change_logo", "Logonu yeniləyə bilər"),
-            ("delete_logo", "Logonu silə bilər")
+            ("view_applogo", "Logoya baxa bilər"),
+            ("add_applogo", "Logo əlavə edə bilər"),
+            ("change_applogo", "Logonu yeniləyə bilər"),
+            ("delete_applogo", "Logonu silə bilər")
         )

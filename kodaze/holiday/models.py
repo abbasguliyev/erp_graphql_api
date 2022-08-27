@@ -77,7 +77,7 @@ class HoldingWorkingDay(AbstractWorkingDays):
         return f"{self.holding} - {self.working_days_count} - {self.date}"
 
 
-class CompanyWorkingDay(models.Model):
+class CompanyWorkingDay(AbstractWorkingDays):
     company = models.ForeignKey('company.Company', on_delete=models.CASCADE, related_name="working_days")
 
     class Meta:
@@ -93,39 +93,39 @@ class CompanyWorkingDay(models.Model):
     def __str__(self) -> str:
         return f"{self.company} - {self.working_days_count} - {self.date}"
 
-class OfficeWorkingDay(models.Model):
+class OfficeWorkingDay(AbstractWorkingDays):
     office = models.ForeignKey('company.Office', on_delete=models.CASCADE, related_name="working_days")
     
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_officeworkingday", "Mövcud office tətil günlərinə baxa bilər"),
-            ("add_officeworkingday", "Office tətil günü əlavə edə bilər"),
-            ("change_officeworkingday", "Officein tətil günü məlumatlarını yeniləyə bilər"),
-            ("delete_officeworkingday", "Officein tətil gününü silə bilər")
+            ("view_officeworkingday", "Mövcud ofis tətil günlərinə baxa bilər"),
+            ("add_officeworkingday", "Ofis tətil günü əlavə edə bilər"),
+            ("change_officeworkingday", "Ofisin tətil günü məlumatlarını yeniləyə bilər"),
+            ("delete_officeworkingday", "Ofisin tətil gününü silə bilər")
         )
 
     def __str__(self) -> str:
         return f"{self.office} - {self.working_days_count} - {self.date}"
 
-class TeamWorkingDay(models.Model):
+class TeamWorkingDay(AbstractWorkingDays):
     team = models.ForeignKey('company.Team', on_delete=models.CASCADE, related_name="working_days")
     
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_teamworkingday", "Mövcud team tətil günlərinə baxa bilər"),
-            ("add_teamworkingday", "Team tətil günü əlavə edə bilər"),
-            ("change_teamworkingday", "Teamnın tətil günü məlumatlarını yeniləyə bilər"),
-            ("delete_teamworkingday", "Teamnın tətil gününü silə bilər")
+            ("view_teamworkingday", "Mövcud komanda tətil günlərinə baxa bilər"),
+            ("add_teamworkingday", "Komanda tətil günü əlavə edə bilər"),
+            ("change_teamworkingday", "Komandanın tətil günü məlumatlarını yeniləyə bilər"),
+            ("delete_teamworkingday", "Komandanın tətil gününü silə bilər")
         )
 
     def __str__(self) -> str:
         return f"{self.team} - {self.working_days_count} - {self.date}"
 
-class PositionWorkingDay(models.Model):
+class PositionWorkingDay(AbstractWorkingDays):
     position = models.ForeignKey('company.Position', on_delete=models.CASCADE, related_name="working_days")
     
     class Meta:
@@ -141,7 +141,7 @@ class PositionWorkingDay(models.Model):
     def __str__(self) -> str:
         return f"{self.position} - {self.working_days_count} - {self.date}"
 
-class DepartmentWorkingDay(models.Model):
+class DepartmentWorkingDay(AbstractWorkingDays):
     department = models.ForeignKey('company.Department', on_delete=models.CASCADE, related_name="working_days")
     
     class Meta:
@@ -199,10 +199,10 @@ class OfficeExceptionWorker(ExceptionWorker):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_officeexceptionworker", "Mövcud office istisna işçilərə baxa bilər"),
-            ("add_officeexceptionworker", "Office istisna işçi əlavə edə bilər"),
-            ("change_officeexceptionworker", "Office istisna işçi məlumatlarını yeniləyə bilər"),
-            ("delete_officeexceptionworker", "Office istisna işçiməlumatalrını silə bilər")
+            ("view_officeexceptionworker", "Mövcud ofis istisna işçilərə baxa bilər"),
+            ("add_officeexceptionworker", "Ofis istisna işçi əlavə edə bilər"),
+            ("change_officeexceptionworker", "Ofis istisna işçi məlumatlarını yeniləyə bilər"),
+            ("delete_officeexceptionworker", "Ofis istisna işçiməlumatalrını silə bilər")
         )
 
     def __str__(self) -> str:

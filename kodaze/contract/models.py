@@ -3,75 +3,76 @@ import django
 from core.image_validator import file_size
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth import get_user_model
-
+from . import (
+    ARTIQ_ODEME_STATUS_CHOICES,
+    BORCU_BAGLA_STATUS_CHOICES,
+    CONTRACT_STATUS_CHOICES,
+    CONTINUING,
+    CASH,
+    GECIKDIRME_STATUS_CHOICES,
+    INITIAL_PAYMENT_DEBT_STATUS_CHOICES,
+    INITIAL_PAYMENT_STATUS_CHOICES,
+    INSTALLMENT,
+    MODIFIED_PRODUCT_STATUS_CHOICES,
+    NATAMAM_STATUS_CHOICES,
+    NEW_GRAPH_CHOICES,
+    NONE,
+    ODEME_STATUS_CHOICES,
+    ODENIS_USLUBU_CHOICES,
+    ODENMEYEN,
+    PAYMENT_STYLE_CHOICES,
+    SERTLI_ODEME_STATUSU,
+    SIFIR_STATUS_CHOICES
+)
 USER = get_user_model()
 # Create your models here.
 
 
 class Contract(models.Model):
-    INSTALLMENT = 'KREDİT'
-    CASH = 'NƏĞD'
-
-    PAYMENT_STYLE_CHOICES = [
-        (CASH, "NƏĞD"),
-        (INSTALLMENT, "KREDİT")
-    ]
-
-    CONTINUING = "DAVAM EDƏN"
-    FINISHED = "BİTMİŞ"
-    CANCELLED = "DÜŞƏN"
-    NONE = "YOXDUR"
-    NEW_GRAPH = "YENİ QRAFİK"
-
-    NEW_GRAPH_CHOICES = [
-        (NEW_GRAPH, "YENİ QRAFİK")
-    ]
-
-    CONTRACT_STATUS_CHOICES = [
-        (CONTINUING, "DAVAM EDƏN"),
-        (FINISHED, "BİTMİŞ"),
-        (CANCELLED, "DÜŞƏN")
-    ]
-
-    INITIAL_PAYMENT_STATUS_CHOICES = [
-        (NONE, "YOXDUR"),
-        (FINISHED, "BİTMİŞ"),
-        (CONTINUING, "DAVAM EDƏN"),
-    ]
-
-    INITIAL_PAYMENT_DEBT_STATUS_CHOICES = [
-        (NONE, "YOXDUR"),
-        (FINISHED, "BİTMİŞ"),
-        (CONTINUING, "DAVAM EDƏN"),
-    ]
-
-    MODIFIED_PRODUCT = "DƏYİŞİLMİŞ MƏHSUL"
-
-    MODIFIED_PRODUCT_STATUS_CHOICES = [
-        (MODIFIED_PRODUCT, "DƏYİŞİLMİŞ MƏHSUL")
-    ]
-
-    person_in_charge_1 = models.ForeignKey(
-        'account.User', on_delete=models.CASCADE, related_name="person_in_charge_1", null=True, blank=True)
-    person_in_charge_2 = models.ForeignKey(
-        'account.User', on_delete=models.CASCADE, related_name="person_in_charge_2", null=True, blank=True)
-    person_in_charge_3 = models.ForeignKey(
-        'account.User', on_delete=models.CASCADE, related_name="person_in_charge_3", null=True, blank=True)
-    customer = models.ForeignKey('account.Cutomer', on_delete=models.CASCADE, related_name="contracts", null=True,
+    responsible_employee_1 = models.ForeignKey(
+        'account.User', on_delete=models.CASCADE, related_name="responsible_employee_1", null=True, blank=True)
+    responsible_employee_2 = models.ForeignKey(
+        'account.User', on_delete=models.CASCADE, related_name="responsible_employee_2", null=True, blank=True)
+    responsible_employee_3 = models.ForeignKey(
+        'account.User', on_delete=models.CASCADE, related_name="responsible_employee_3", null=True, blank=True)
+    customer = models.ForeignKey('account.Customer', on_delete=models.CASCADE, related_name="contracts", null=True,
                                  blank=True)
     product = models.ForeignKey("product.Product", on_delete=models.CASCADE, related_name="contracts", null=True,
                                 blank=True)
     product_quantity = models.PositiveIntegerField(default=1, blank=True)
-    total_amount = models.FloatField(default=0, blank=True)
+    total_amount = models.DecimalField(
+        default=0, max_digits=12, decimal_places=2, blank=True)
     electronic_signature = models.ImageField(upload_to="media/contract/%Y/%m/%d/", null=True, blank=True, validators=[
                                              file_size, FileExtensionValidator(['png', 'jpeg', 'jpg'])])
     contract_date = models.DateField(null=True, blank=True)
-    contract_created_date = models.DateField(auto_now_add=True, null=True)
+    contract_created_date = models.DateField(auto_now_add=True)
     company = models.ForeignKey('company.Company', on_delete=models.CASCADE,
                                 related_name="contracts", null=True, blank=True)
     office = models.ForeignKey('company.Office', on_delete=models.CASCADE,
                                related_name="contracts", null=True, blank=True)
     remaining_debt = models.FloatField(default=0, blank=True)
+    loan_term = models.IntegerField(default=0, blank=True)
+    initial_payment = models.DecimalField(
+        default=0, max_digits=12, decimal_places=2, blank=True)
+    initial_payment_debt = models.DecimalField(
+        default=0, max_digits=12, decimal_places=2, blank=True)
+    initial_payment_date = models.DateField(blank=True, null=True)
+    initial_payment_debt_date = models.DateField(blank=True, null=True)
+    pdf = models.FileField(upload_to="media/contract/%Y/%m/%d/", blank=True,
+                           null=True, validators=[file_size, FileExtensionValidator(['pdf'])])
+    pdf2 = models.FileField(upload_to="media/contract/%Y/%m/%d/", blank=True,
+                            null=True, validators=[file_size, FileExtensionValidator(['pdf'])])
+
+    cancelled_date = models.DateField(null=True, blank=True)
+    debt_closing_date = models.DateField(null=True, blank=True)
+
+    compensation_income = models.DecimalField(
+        default=0, max_digits=12, decimal_places=2, blank=True, null=True)
+    compensation_expense = models.DecimalField(
+        default=0, max_digits=12, decimal_places=2, blank=True, null=True)
+
+    debt_finished = models.BooleanField(default=False, blank=True)
+
     is_remove = models.BooleanField(default=False)
 
     payment_style = models.CharField(
@@ -103,12 +104,6 @@ class Contract(models.Model):
         default=CONTINUING
     )
 
-    loan_term = models.IntegerField(default=0, blank=True)
-    initial_payment = models.FloatField(blank=True, default=0)
-    initial_payment_debt = models.FloatField(blank=True, default=0)
-    initial_payment_date = models.DateField(blank=True, null=True)
-    initial_payment_debt_date = models.DateField(blank=True, null=True)
-
     initial_payment_status = models.CharField(
         max_length=20,
         choices=INITIAL_PAYMENT_STATUS_CHOICES,
@@ -120,21 +115,6 @@ class Contract(models.Model):
         choices=INITIAL_PAYMENT_DEBT_STATUS_CHOICES,
         default=NONE
     )
-    pdf = models.FileField(upload_to="media/contract/%Y/%m/%d/", blank=True,
-                           null=True, validators=[file_size, FileExtensionValidator(['pdf'])])
-    pdf2 = models.FileField(upload_to="media/contract/%Y/%m/%d/", blank=True,
-                            null=True, validators=[file_size, FileExtensionValidator(['pdf'])])
-
-    cancelled_date = models.DateField(null=True, blank=True)
-    debt_closing_date = models.DateField(null=True, blank=True)
-
-    compensation_income = models.FloatField(default=0, null=True, blank=True)
-    compensation_expense = models.FloatField(default=0, null=True, blank=True)
-
-    debt_finished = models.BooleanField(default=False, blank=True)
-
-    creditor = models.ForeignKey(
-        USER, on_delete=models.CASCADE, related_name="creditor_contracts")
 
     class Meta:
         ordering = ("-pk",)
@@ -148,6 +128,24 @@ class Contract(models.Model):
 
     def __str__(self) -> str:
         return f"{self.pk}. contract {self.customer} - {self.product}"
+
+
+class ContractCreditor(models.Model):
+    creditor = models.ForeignKey(
+        USER, on_delete=models.CASCADE, related_name="creditor_contracts")
+    contract = models.ForeignKey(
+        Contract, on_delete=models.CASCADE, related_name="creditors")
+
+    class Meta:
+        ordering = ("-pk",)
+        default_permissions = []
+        permissions = (
+            ("view_contractcreditor", "Mövcud müqavilələrin kreditorlarına baxa bilər"),
+            ("add_contractcreditor", "Müqaviləyə kreditor əlavə edə bilər"),
+            ("change_contractcreditor",
+             "Müqavilənin kreditor məlumatlarını yeniləyə bilər"),
+            ("delete_contractcreditor", "Müqavilənin kreditorunu silə bilər")
+        )
 
 
 class ContractGift(models.Model):
@@ -171,74 +169,14 @@ class ContractGift(models.Model):
         return f"Gift --- {self.contract} - {self.product}"
 
 
-class INSTALLMENT(models.Model):
-    ODENEN = "ÖDƏNƏN"
-    ODENMEYEN = "ÖDƏNMƏYƏN"
-
-    BURAXILMIS_AY = "BURAXILMIŞ AY"
-    NATAMAM_AY = "NATAMAM AY"
-    RAZILASDIRILMIS_AZ_ODEME = "RAZILAŞDIRILMIŞ AZ ÖDƏMƏ"
-    ARTIQ_ODEME = "ARTIQ ÖDƏMƏ"
-    SON_AYIN_BOLUNMESI = "SON AYIN BÖLÜNMƏSİ"
-
-    GECIKDIRME = "GECİKDİRMƏ"
-
-    SIFIR_NOVBETI_AY = "SIFIR NÖVBƏTİ AY"
-    SIFIR_SONUNCU_AY = "SIFIR SONUNCU AY"
-    SIFIR_DIGER_AYLAR = "SIFIR DİGƏR AYLAR"
-
-    NATAMAM_NOVBETI_AY = "NATAMAM NÖVBƏTİ AY"
-    NATAMAM_SONUNCU_AY = "NATAMAM SONUNCU AY"
-    NATAMAM_DIGER_AYLAR = "NATAMAM DİGƏR AYLAR"
-
-    ARTIQ_BIR_AY = "ARTIQ BİR AY"
-    ARTIQ_BUTUN_AYLAR = "ARTIQ BÜTÜN AYLAR"
-
-    BORCU_BAGLA = "BORCU BAĞLA"
-
-    ODEME_STATUS_CHOICES = [
-        (ODENMEYEN, "ÖDƏNMƏYƏN"),
-        (ODENEN, "ÖDƏNƏN"),
-    ]
-
-    SERTLI_ODEME_STATUSU = [
-        (BURAXILMIS_AY, "BURAXILMIŞ AY"),
-        (NATAMAM_AY, "NATAMAM AY"),
-        (RAZILASDIRILMIS_AZ_ODEME, "RAZILAŞDIRILMIŞ AZ ÖDƏMƏ"),
-        (ARTIQ_ODEME, "ARTIQ ÖDƏMƏ"),
-        (SON_AYIN_BOLUNMESI, "SON AYIN BÖLÜNMƏSİ")
-    ]
-
-    GECIKDIRME_STATUS_CHOICES = [
-        (GECIKDIRME, "GECİKDİRMƏ")
-    ]
-
-    SIFIR_STATUS_CHOICES = [
-        (SIFIR_NOVBETI_AY, "SIFIR NÖVBƏTİ AY"),
-        (SIFIR_SONUNCU_AY, "SIFIR SONUNCU AY"),
-        (SIFIR_DIGER_AYLAR, "SIFIR DİGƏR AYLAR")
-    ]
-
-    NATAMAM_STATUS_CHOICES = [
-        (NATAMAM_NOVBETI_AY, "NATAMAM NÖVBƏTİ AY"),
-        (NATAMAM_SONUNCU_AY, "NATAMAM SONUNCU AY"),
-        (NATAMAM_DIGER_AYLAR, "NATAMAM DİGƏR AYLAR")
-    ]
-
-    ARTIQ_ODEME_STATUS_CHOICES = [
-        (ARTIQ_BIR_AY, "ARTIQ BİR AY"),
-        (ARTIQ_BUTUN_AYLAR, "ARTIQ BÜTÜN AYLAR")
-    ]
-
-    BORCU_BAGLA_STATUS_CHOICES = [
-        (BORCU_BAGLA, "BORCU BAĞLA")
-    ]
-
+class Installment(models.Model):
     month_no = models.PositiveIntegerField(default=1)
     contract = models.ForeignKey(Contract, blank=True, null=True, related_name='installments',
                                  on_delete=models.CASCADE)
     date = models.DateField(default=False, blank=True, null=True)
     price = models.FloatField(default=0, blank=True)
+    last_month = models.BooleanField(default=False)
+    note = models.TextField(default="", blank=True)
     payment_status = models.CharField(
         max_length=30,
         choices=ODEME_STATUS_CHOICES,
@@ -293,35 +231,25 @@ class INSTALLMENT(models.Model):
         blank=True
     )
 
-    last_month = models.BooleanField(default=False)
-    note = models.TextField(default="", blank=True)
-
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_installment", "Mövcud ödəmələrə baxa bilər"),
-            ("add_installment", "Ödəmə əlavə edə bilər"),
-            ("change_installment", "Ödəmə məlumatlarını yeniləyə bilər"),
-            ("delete_installment", "Ödəmə silə bilər")
+            ("view_installment", "Mövcud kredit ödəmələrinə baxa bilər"),
+            ("add_installment", "Kredit ödəməsi əlavə edə bilər"),
+            ("change_installment", "Kredit ödəməsi məlumatlarını yeniləyə bilər"),
+            ("delete_installment", "Kredit ödəməsini silə bilər")
         )
 
     def __str__(self) -> str:
-        return f"{self.pk}. {self.month_no}.month-{self.date} - ({self.contract.id}).id contract - {self.contract.customer.asa} - {self.price}"
+        return f"{self.pk}. {self.month_no}.month-{self.date} - ({self.contract.id}).id contract - {self.contract.customer.fullname} - {self.price}"
 
 
 class ContractChange(models.Model):
-    KREDIT = 'KREDİT'
-    NAGD = 'NƏĞD'
-
-    ODENIS_USLUBU_CHOICES = [
-        (NAGD, "NƏĞD"),
-        (KREDIT, "KREDİT"),
-    ]
     old_contract = models.ForeignKey(
         Contract, related_name="changed_contracts", on_delete=models.CASCADE)
     payment_style = models.CharField(
-        max_length=100, choices=ODENIS_USLUBU_CHOICES, default=KREDIT)
+        max_length=100, choices=ODENIS_USLUBU_CHOICES, default=INSTALLMENT)
     loan_term = models.PositiveIntegerField(default=0, blank=True)
     product = models.ForeignKey("product.Product", on_delete=models.CASCADE)
 

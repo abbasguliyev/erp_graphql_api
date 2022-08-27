@@ -4,6 +4,8 @@ import datetime
 from django.contrib.auth import get_user_model
 
 USER = get_user_model()
+
+
 class AbstractPrim(models.Model):
     KREDIT = 'KREDİT'
     NAGD = 'NƏĞD'
@@ -12,33 +14,36 @@ class AbstractPrim(models.Model):
         (NAGD, "NƏĞD"),
     ]
 
-    prim_status = models.ForeignKey('account.EmployeeStatus', on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey('product.Product', on_delete=models.CASCADE, null=True, blank=True)
+    prim_status = models.ForeignKey(
+        'account.EmployeeStatus', on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(
+        'product.Product', on_delete=models.CASCADE, null=True, blank=True)
     sales_amount = models.FloatField(default=0, null=True, blank=True)
-    payment_style =  models.CharField(
+    payment_style = models.CharField(
         max_length=20,
         choices=ODENIS_USLUBU_CHOICES,
         default=NAGD
     )
-    position = models.ForeignKey('company.Position', on_delete=models.SET_NULL, null=True)
+    position = models.ForeignKey(
+        'company.Position', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         abstract = True
 
-class VanLeaderPrim(AbstractPrim):
-    teamya_gore_prim = models.FloatField(default=0, blank=True)
-    fix_maas = models.FloatField(default=0, blank=True)
+
+class AbstractSalaryMethod(models.Model):
+    employee = models.ForeignKey(USER, on_delete=models.CASCADE)
+    amount = models.FloatField(default=0, blank=True)
+    note = models.TextField(default="", blank=True)
+    date = models.DateField(default=django.utils.timezone.now, blank=True)
 
     class Meta:
-        ordering = ("pk",)
-        default_permissions = []
+        abstract = True
 
-    def __str__(self) -> str:
-        return f"{self.prim_status} - {self.teamya_gore_prim} - {self.payment_style} - {self.position.name}"
 
 class VanLeaderPrimNew(AbstractPrim):
     payment_style = None
-    negd = models.FloatField(default=0, blank=True)
+    cash = models.FloatField(default=0, blank=True)
     installment_4_12 = models.FloatField(default=0, blank=True)
     installment_13_18 = models.FloatField(default=0, blank=True)
     installment_19_24 = models.FloatField(default=0, blank=True)
@@ -47,29 +52,19 @@ class VanLeaderPrimNew(AbstractPrim):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_person_in_charge_1primnew", "Mövcud person_in_charge_1 primlərə baxa bilər"),
-            ("add_person_in_charge_1primnew", "Vanleader prim əlavə edə bilər"),
-            ("change_person_in_charge_1primnew", "Vanleader prim məlumatlarını yeniləyə bilər"),
-            ("delete_person_in_charge_1primnew", "Vanleader prim silə bilər")
+            ("view_vanleaderprimnew", "Mövcud vanleader primlərə baxa bilər"),
+            ("add_vanleaderprimnew", "Vanleader prim əlavə edə bilər"),
+            ("change_vanleaderprimnew", "Vanleader prim məlumatlarını yeniləyə bilər"),
+            ("delete_vanleaderprimnew", "Vanleader prim silə bilər")
         )
 
     def __str__(self) -> str:
         return f"{self.prim_status} - {self.position.name}"
 
-class DealerPrim(AbstractPrim):
-    teamya_gore_prim = models.FloatField(default=0, blank=True)
-    fix_maas = models.FloatField(default=0, blank=True)
-
-    class Meta:
-        ordering = ("pk",)
-        default_permissions = []
-
-    def __str__(self) -> str:
-        return f"{self.prim_status} - {self.teamya_gore_prim} - {self.payment_style} - {self.position.name}"
 
 class DealerPrimNew(AbstractPrim):
     payment_style = None
-    negd = models.FloatField(default=0, blank=True)
+    cash = models.FloatField(default=0, blank=True)
     installment_4_12 = models.FloatField(default=0, blank=True)
     installment_13_18 = models.FloatField(default=0, blank=True)
     installment_19_24 = models.FloatField(default=0, blank=True)
@@ -78,19 +73,20 @@ class DealerPrimNew(AbstractPrim):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_person_in_charge_2primnew", "Mövcud person_in_charge_2 primlərə baxa bilər"),
-            ("add_person_in_charge_2primnew", "Dealer prim əlavə edə bilər"),
-            ("change_person_in_charge_2primnew", "Dealer prim məlumatlarını yeniləyə bilər"),
-            ("delete_person_in_charge_2primnew", "Dealer prim silə bilər")
+            ("view_dealerprimnew", "Mövcud dealer primlərə baxa bilər"),
+            ("add_dealerprimnew", "Dealer prim əlavə edə bilər"),
+            ("change_dealerprimnew", "Dealer prim məlumatlarını yeniləyə bilər"),
+            ("delete_dealerprimnew", "Dealer prim silə bilər")
         )
 
     def __str__(self) -> str:
         return f"{self.prim_status} - {self.position.name}"
 
+
 class OfficeLeaderPrim(AbstractPrim):
     payment_style = None
-    officee_gore_prim = models.FloatField(default=0, blank=True)
-    fix_maas = models.FloatField(default=0, blank=True)
+    prim_for_office = models.FloatField(default=0, blank=True)
+    fix_prim = models.FloatField(default=0, blank=True)
 
     class Meta:
         ordering = ("pk",)
@@ -98,23 +94,25 @@ class OfficeLeaderPrim(AbstractPrim):
         permissions = (
             ("view_officeleaderprim", "Mövcud office leader primlərə baxa bilər"),
             ("add_officeleaderprim", "Office Leader prim əlavə edə bilər"),
-            ("change_officeleaderprim", "Office Leader prim məlumatlarını yeniləyə bilər"),
+            ("change_officeleaderprim",
+             "Office Leader prim məlumatlarını yeniləyə bilər"),
             ("delete_officeleaderprim", "Office Leader prim silə bilər")
         )
 
     def __str__(self) -> str:
-        return f"{self.prim_status} - {self.officee_gore_prim} - {self.position.name}"
+        return f"{self.prim_status} - {self.prim_for_office} - {self.position.name}"
+
 
 class CanvasserPrim(AbstractPrim):
     payment_style = None
-    satis0 = models.FloatField(default=0, blank=True)
-    satis1_8 = models.FloatField(default=0, blank=True)
-    satis9_14 = models.FloatField(default=0, blank=True)
-    satis15p = models.FloatField(default=0, blank=True)
-    satis20p = models.FloatField(default=0, blank=True)
-    teamya_gore_prim = models.FloatField(default=0, blank=True)
-    officee_gore_prim = models.FloatField(default=0, blank=True)
-    fix_maas = models.FloatField(default=0, blank=True)
+    sale_0 = models.FloatField(default=0, blank=True)
+    sale_1_8 = models.FloatField(default=0, blank=True)
+    sale_9_14 = models.FloatField(default=0, blank=True)
+    sale_15p = models.FloatField(default=0, blank=True)
+    sale_20p = models.FloatField(default=0, blank=True)
+    prim_for_team = models.FloatField(default=0, blank=True)
+    prim_for_office = models.FloatField(default=0, blank=True)
+    fix_prim = models.FloatField(default=0, blank=True)
 
     class Meta:
         ordering = ("pk",)
@@ -127,90 +125,81 @@ class CanvasserPrim(AbstractPrim):
         )
 
     def __str__(self) -> str:
-        return f"{self.prim_status} - {self.officee_gore_prim} - {self.position.name}"
+        return f"{self.prim_status} - {self.prim_for_office} - {self.position.name}"
 
-class KreditorPrim(models.Model):
-    prim_faizi = models.PositiveBigIntegerField(default=0, blank=True)
+
+class CreditorPrim(models.Model):
+    prim_percent = models.PositiveBigIntegerField(default=0, blank=True)
 
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_installmentorprim", "Mövcud installmentor primlərə baxa bilər"),
-            ("add_installmentorprim", "Kreditor prim əlavə edə bilər"),
-            ("change_installmentorprim", "Kreditor prim məlumatlarını yeniləyə bilər"),
-            ("delete_installmentorprim", "Kreditor prim silə bilər")
+            ("view_creditorprim", "Mövcud kreditor primlərə baxa bilər"),
+            ("add_creditorprim", "Kreditor prim əlavə edə bilər"),
+            ("change_creditorprim", "Kreditor prim məlumatlarını yeniləyə bilər"),
+            ("delete_creditorprim", "Kreditor prim silə bilər")
         )
 
     def __str__(self) -> str:
-        return f"{self.prim_faizi}"
+        return f"{self.prim_percent}"
 
 # -----------------------------------------------------------------------------------------------------------------------------
 
-class Avans(models.Model):
-    employee = models.ManyToManyField(USER, related_name="employee_avans")
-    amount = models.FloatField(default=0, blank=True)
-    yarim_ay_emek_haqqi = models.PositiveBigIntegerField(default=0, blank=True)
-    note = models.TextField(default="", blank=True)
-    avans_tarixi = models.DateField(default=django.utils.timezone.now, blank=True)
-    
+
+class AdvancePayment(AbstractSalaryMethod):
+    half_month_salary = models.PositiveBigIntegerField(default=0, blank=True)
+
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_avans", "Mövcud avanslara baxa bilər"),
-            ("add_avans", "Avans əlavə edə bilər"),
-            ("change_avans", "Avans məlumatlarını yeniləyə bilər"),
-            ("delete_avans", "Avans silə bilər")
+            ("view_advancepayment", "Mövcud avanslara baxa bilər"),
+            ("add_advancepayment", "Avans əlavə edə bilər"),
+            ("change_advancepayment", "Avans məlumatlarını yeniləyə bilər"),
+            ("delete_advancepayment", "Avans silə bilər")
         )
 
     def __str__(self) -> str:
-        return f"{self.employee} {self.avans_tarixi}"
+        return f"{self.employee} {self.date}"
 
-class MaasOde(models.Model):
-    employee = models.ManyToManyField(USER, related_name="maas_ode")
-    amount = models.FloatField(default=0, blank=True)
-    note = models.TextField(default="", blank=True)
-    installment = models.DateField(default=django.utils.timezone.now, null=True, blank=True)
-    
+
+class PaySalary(AbstractSalaryMethod):
+    installment = models.DateField(
+        default=django.utils.timezone.now, null=True, blank=True)
+
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_maasode", "Mövcud maaş ödəmələrinə baxa bilər"),
-            ("add_maasode", "Maaş ödəmə əlavə edə bilər"),
-            ("change_maasode", "Maaş ödəmə məlumatlarını yeniləyə bilər"),
-            ("delete_maasode", "Maaş ödəmə silə bilər")
+            ("view_paysalary", "Mövcud maaş ödəmələrinə baxa bilər"),
+            ("add_paysalary", "Maaş ödəmə əlavə edə bilər"),
+            ("change_paysalary", "Maaş ödəmə məlumatlarını yeniləyə bilər"),
+            ("delete_paysalary", "Maaş ödəmə silə bilər")
         )
 
     def __str__(self) -> str:
         return f"{self.employee} {self.installment}"
 
-class Kesinti(models.Model):
-    employee = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="employee_kesinti")
-    amount = models.FloatField(default=0, blank=True)
-    note = models.TextField(default="", blank=True)
-    kesinti_tarixi = models.DateField(default=django.utils.timezone.now, blank=True)
-    
+
+class SalaryDeduction(AbstractSalaryMethod):
+
     class Meta:
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_kesinti", "Mövcud kəsintilərə baxa bilər"),
-            ("add_kesinti", "Kəsinti əlavə edə bilər"),
-            ("change_kesinti", "Kəsinti məlumatlarını yeniləyə bilər"),
-            ("delete_kesinti", "Kəsinti silə bilər")
+            ("view_salarydeduction", "Mövcud kəsintilərə baxa bilər"),
+            ("add_salarydeduction", "Kəsinti əlavə edə bilər"),
+            ("change_salarydeduction", "Kəsinti məlumatlarını yeniləyə bilər"),
+            ("delete_salarydeduction", "Kəsinti silə bilər")
         )
 
     def __str__(self) -> str:
-        return f"{self.employee} {self.kesinti_tarixi}"
+        return f"{self.employee} {self.date}"
 
-class Bonus(models.Model):
-    employee = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="employee_bonus")
-    amount = models.FloatField(default=0, blank=True)
-    note = models.TextField(default="", blank=True)
-    bonus_tarixi = models.DateField(default=django.utils.timezone.now, blank=True)
-    
+
+class Bonus(AbstractSalaryMethod):
+
     class Meta:
         ordering = ("pk",)
         default_permissions = []
@@ -222,13 +211,15 @@ class Bonus(models.Model):
         )
 
     def __str__(self) -> str:
-        return f"{self.employee} {self.amount} {self.bonus_tarixi}"
- 
-class MaasGoruntuleme(models.Model):
-    employee = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="employee_maas_goruntuleme")
-    satis_quantityi = models.PositiveBigIntegerField(default=0, blank=True)
+        return f"{self.employee} {self.amount} {self.date}"
+
+
+class SalaryView(models.Model):
+    employee = models.ForeignKey(
+        USER, on_delete=models.CASCADE, related_name="employee_salary_views")
+    sales_quantity = models.PositiveBigIntegerField(default=0, blank=True)
     sales_amount = models.FloatField(default=0, blank=True)
-    yekun_maas = models.FloatField(default=0, blank=True)
+    final_salary = models.FloatField(default=0, blank=True)
     date = models.DateField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
 
@@ -236,11 +227,11 @@ class MaasGoruntuleme(models.Model):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_maasgoruntuleme", "Mövcud maaş cədvəllərinə baxa bilər"),
-            ("add_maasgoruntuleme", "Maaş cədvəli əlavə edə bilər"),
-            ("change_maasgoruntuleme", "Maaş cədvəlinin məlumatlarını yeniləyə bilər"),
-            ("delete_maasgoruntuleme", "Maaş cədvəlini silə bilər")
+            ("view_salaryview", "Mövcud maaş cədvəllərinə baxa bilər"),
+            ("add_salaryview", "Maaş cədvəli əlavə edə bilər"),
+            ("change_salaryview", "Maaş cədvəlinin məlumatlarını yeniləyə bilər"),
+            ("delete_salaryview", "Maaş cədvəlini silə bilər")
         )
 
     def __str__(self) -> str:
-        return f"{self.employee} {self.yekun_maas} {self.date}"
+        return f"{self.employee} {self.final_salary} {self.date}"
