@@ -18,7 +18,6 @@ from django.db.models import (
     F
 )
 
-
 class EmployeeStatus(models.Model):
     status_name = models.CharField(max_length=200)
 
