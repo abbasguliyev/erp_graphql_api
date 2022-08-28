@@ -12,7 +12,7 @@ from . import (
 
 User = get_user_model()
 
-@shared_task(name='demo')
+@shared_task(name='demo_create_task')
 def demo_create_task():
     users = User.objects.all()
 

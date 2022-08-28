@@ -48,22 +48,15 @@ SESSION_COOKIE_SECURE = False
 # Application definition
 
 INSTALLED_APPS = [
+    # Django modules
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # 3rd party libraries
-    'django_celery_beat',
-    'django_celery_results',
-    'django_extensions',
-    'django_filters',
-    'dbbackup',
-    "corsheaders",
-
-    # apps
+    
+    # Local apps
     'account.apps.AccountConfig',
     'company.apps.CompanyConfig',
     'cashbox.apps.CashboxConfig',
@@ -77,6 +70,16 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'backup_restore.apps.BackupRestoreConfig',
     'update.apps.UpdateConfig',
+    'graphql',
+
+    # External apps
+    'django_celery_beat',
+    'django_celery_results',
+    'django_extensions',
+    'django_filters',
+    'dbbackup',
+    "corsheaders",
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -143,6 +146,10 @@ else:
             'PORT': '5432',
         }
     }
+
+GRAPHENE = {
+    "SCHEMA": "api.api.schema"
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
