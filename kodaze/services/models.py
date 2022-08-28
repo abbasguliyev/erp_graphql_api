@@ -1,8 +1,6 @@
 import django
 from django.db import models
 
-from account.models import Customer
-
 
 class Service(models.Model):
     installment = models.BooleanField(default=False, blank=True)
@@ -13,7 +11,7 @@ class Service(models.Model):
     product = models.ManyToManyField(
         "product.Product", related_name="services")
     customer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, null=True, blank=True, related_name="services")
+        "account.Customer", on_delete=models.CASCADE, null=True, blank=True, related_name="services")
     service_date = models.DateField(
         default=django.utils.timezone.now, blank=True)
     is_done = models.BooleanField(default=False)
@@ -61,3 +59,26 @@ class ServicePayment(models.Model):
 
     def __str__(self) -> str:
         return f"service-{self.service}-{self.amount_to_be_paid}-{self.is_done}"
+
+
+class ServiceProductForContract(models.Model):
+    service_period = models.IntegerField(default=1)
+    product = models.ManyToManyField(
+        "product.Product", related_name="service_for_contracts")
+
+    class Meta:
+        ordering = ("pk",)
+        default_permissions = []
+        permissions = (
+            ("view_serviceproductforcontract",
+             "Müqaviləyə periodik servis üçün təyin olunmuş məhsullara baxa bilər"),
+            ("add_serviceproductforcontract",
+             "Müqaviləyə periodik servis üçün məhsullar əlavə edə bilər"),
+            ("change_serviceproductforcontract",
+             "Müqaviləyə periodik servis üçün təyin olunmuş məhsulların məlumatlarını yeniləyə bilər"),
+            ("delete_serviceproductforcontract",
+             "Müqaviləyə periodik servis üçün təyin olunmuş məhsulları silə bilər")
+        )
+
+    def __str__(self) -> str:
+        return f"{self.service_period}"

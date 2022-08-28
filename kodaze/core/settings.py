@@ -196,6 +196,7 @@ USE_I18N = True
 USE_TZ = True
 
 DATE_FORMAT = ['%d-%m-%Y']
+DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
 
 USE_L10N = False
 
@@ -231,7 +232,7 @@ CELERY_CACHE_BACKEND = 'default'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'alliance_cache_table',
+        'LOCATION': 'kodaze_cache_table',
     }
 }
 

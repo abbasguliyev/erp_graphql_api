@@ -54,6 +54,7 @@ class Company(AbstractCompany):
 class Office(AbstractCompany):
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name="offices")
+    auto_create_warehouse = models.BooleanField(default=True, blank=True)
 
     class Meta:
         ordering = ("pk",)

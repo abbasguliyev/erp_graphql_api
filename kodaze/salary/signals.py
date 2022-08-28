@@ -9,6 +9,10 @@ from company.models import Position
 from .models import CanvasserPrim, DealerPrimNew, SalaryView, OfficeLeaderPrim, VanLeaderPrimNew
 from contract.models import Contract
 import traceback
+from contract import (
+    CASH,
+    INSTALLMENT
+)
 
 @receiver(post_save, sender=Contract)
 def create_prim(sender, instance, created, **kwargs):
@@ -22,8 +26,6 @@ def create_prim(sender, instance, created, **kwargs):
         
         contract_loan_term = instance.loan_term
         contract_payment_style = instance.payment_style
-        if contract_payment_style == "İKİ DƏFƏYƏ NƏĞD":
-            contract_payment_style = "NƏĞD"
 
         responsible_employee_1 = instance.responsible_employee_1
         if responsible_employee_1 is not None:
@@ -50,9 +52,9 @@ def create_prim(sender, instance, created, **kwargs):
 
         office = instance.office
         company = instance.company
-        department = instance.responsible_employee_1.department
+        # department = instance.responsible_employee_1.department
         print(f"{company=}")
-        print(f"{department=}")
+        # print(f"{department=}")
         if (office is not None) or (office != ""):
             officeLeaderPosition = Position.objects.get(name__icontains="OFFICE LEADER")
             officeLeaders = User.objects.filter(office=office, position=officeLeaderPosition)
@@ -85,9 +87,9 @@ def create_prim(sender, instance, created, **kwargs):
             responsible_employee_1_salary_view_this_month.sales_amount = float(responsible_employee_1_salary_view_this_month.sales_amount) +  (float(instance.product.price) * float(instance.product_quantity))
             
             responsible_employee_1_salary_view_this_month.save()
-            if contract_payment_style == "NƏĞD":
+            if contract_payment_style == CASH:
                 responsible_employee_1_salary_view_novbeti_ay.final_salary = float(responsible_employee_1_salary_view_novbeti_ay.final_salary) + (float(responsible_employee_1_prim.cash) * float(instance.product_quantity))
-            elif contract_payment_style == "KREDİT":
+            elif contract_payment_style == INSTALLMENT:
                 if int(contract_loan_term) >= 0 and int(contract_loan_term) <= 3:
                     responsible_employee_1_salary_view_novbeti_ay.final_salary = float(responsible_employee_1_salary_view_novbeti_ay.final_salary) + (float(responsible_employee_1_prim.cash) * float(instance.product_quantity))
                 elif int(contract_loan_term) >= 4 and int(contract_loan_term) <= 12:
@@ -114,9 +116,9 @@ def create_prim(sender, instance, created, **kwargs):
 
             responsible_employee_2_salary_view_this_month.save()
 
-            if contract_payment_style == "NƏĞD":
+            if contract_payment_style == CASH:
                 responsible_employee_2_salary_view_novbeti_ay.final_salary = float(responsible_employee_2_salary_view_novbeti_ay.final_salary) + (float(responsible_employee_2_prim.cash) * float(instance.product_quantity))
-            elif contract_payment_style == "KREDİT":
+            elif contract_payment_style == INSTALLMENT:
                 if int(contract_loan_term) >= 0 and int(contract_loan_term) <= 3:
                     responsible_employee_2_salary_view_novbeti_ay.final_salary = float(responsible_employee_2_salary_view_novbeti_ay.final_salary) + (float(responsible_employee_2_prim.cash) * float(instance.product_quantity))
                 elif int(contract_loan_term) >= 4 and int(contract_loan_term) <= 12:

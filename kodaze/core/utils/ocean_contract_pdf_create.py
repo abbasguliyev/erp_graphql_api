@@ -176,7 +176,10 @@ def ocean_installment_contract_pdf_canvas(contract) -> list:
     month = contract.contract_date.month
     year = contract.contract_date.year
 
-    region = contract.customer.region.region_name
+    try:
+        region = contract.customer.region.region_name
+    except:
+        region = ""
     customer = contract.customer
 
     payment_style = contract.payment_style
@@ -672,9 +675,9 @@ def ocean_installment_create_contract_pdf(canvas, contract):
     new_pdfs = canvas
     # read your existing PDF
     file_path = os.path.join(
-        BASE_DIR, 'media/media/contract_doc/ocean-contract-kredit.pdf')
+        BASE_DIR, 'media/media/contract_doc/ocean-contract-credit.pdf')
     file_path_new = os.path.join(
-        f'media/media/contract_doc/installment/ocean-contract-kredit-{contract.pk}.pdf')
+        f'media/media/contract_doc/installment/ocean-contract-credit-{contract.pk}.pdf')
 
     existing_pdf = PdfFileReader(
         open(file_path, "rb")

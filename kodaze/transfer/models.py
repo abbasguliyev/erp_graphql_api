@@ -20,9 +20,9 @@ class AbstractTransfer(models.Model):
 
 
 class TransferFromOfficeToCompany(AbstractTransfer):
-    office_cashbox = models.ForeignKey("cashbox.OfficeCashbox", on_delete=models.CASCADE, null=True,
+    office_cashbox = models.ForeignKey("cashbox.OfficeCashbox", on_delete=models.CASCADE,
                                        related_name="transfer_from_office_to_company")
-    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE, null=True,
+    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE,
                                         related_name="transfer_from_office_to_company")
 
     class Meta:
@@ -44,7 +44,7 @@ class TransferFromOfficeToCompany(AbstractTransfer):
 
 
 class TransferFromCompanyToOffices(AbstractTransfer):
-    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE, null=True,
+    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE,
                                         related_name="transfer_from_company_to_offices")
     office_cashbox = models.ManyToManyField(
         "cashbox.OfficeCashbox", related_name="transfer_from_company_to_offices")
@@ -68,9 +68,9 @@ class TransferFromCompanyToOffices(AbstractTransfer):
 
 
 class TransferFromCompanyToHolding(AbstractTransfer):
-    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE, null=True,
+    company_cashbox = models.ForeignKey("cashbox.CompanyCashbox", on_delete=models.CASCADE,
                                         related_name="transfer_from_company_to_holding")
-    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE, null=True,
+    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE,
                                         related_name="transfer_from_company_to_holding")
     
     class Meta:
@@ -92,7 +92,7 @@ class TransferFromCompanyToHolding(AbstractTransfer):
 
 
 class TransferFromHoldingToCompany(AbstractTransfer):
-    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE, null=True,
+    holding_cashbox = models.ForeignKey("cashbox.HoldingCashbox", on_delete=models.CASCADE,
                                         related_name="transfer_from_holding_to_company")
     company_cashbox = models.ManyToManyField(
         "cashbox.CompanyCashbox", related_name="transfer_from_holding_to_company")

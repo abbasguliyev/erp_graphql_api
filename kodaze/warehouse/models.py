@@ -8,6 +8,10 @@ from django.db.models import (
     F
 )
 
+from . import (
+    TRANSFER,
+    EMELIYYAT_NOVU_CHOICES,
+)
 User = get_user_model()
 
 
@@ -96,18 +100,10 @@ class Stock(models.Model):
 
 
 class Operation(models.Model):
-    TRANSFER = 'transfer'
-    STOK_YENILEME = 'stok yeniləmə'
-
-    EMELIYYAT_NOVU_CHOICES = [
-        (TRANSFER, "transfer"),
-        (STOK_YENILEME, "stok yeniləmə"),
-    ]
-
     shipping_warehouse = models.ForeignKey(
-        Warehouse, on_delete=models.CASCADE, null=True, related_name="shipping_warehouse")
+        Warehouse, on_delete=models.CASCADE, related_name="shipping_warehouse")
     receiving_warehouse = models.ForeignKey(
-        Warehouse, on_delete=models.CASCADE, null=True, related_name="receiving_warehouse")
+        Warehouse, on_delete=models.CASCADE, related_name="receiving_warehouse")
 
     product_and_quantity = models.CharField(
         max_length=500, null=True, blank=True)

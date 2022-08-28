@@ -17,12 +17,13 @@ from core.utils.magnus_contract_pdf_create import (
     magnus_installment_contract_pdf_canvas
 )
 
+from django.db import transaction
 
 @receiver(post_save, sender=Contract)
 def create_installment(sender, instance, created, **kwargs):
     if created:
         instance_id = instance.id
-        create_installment_task.delay(instance_id, True)
+        transaction.on_commit(lambda: create_installment_task.delay(instance_id, True))
 
 
 @receiver(post_save, sender=Contract)
@@ -74,4 +75,4 @@ def create_and_add_pdf_to_contract_installment(sender, instance, created, **kwar
 def demo_sale_count(sender, instance, created, **kwargs):
     if created:
         instance_id = instance.id
-        demo_sale_count_task.delay(instance_id)
+        transaction.on_commit(lambda: demo_sale_count_task.delay(instance_id))

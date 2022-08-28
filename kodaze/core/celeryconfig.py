@@ -20,7 +20,7 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    "salary_view_create_task": {
+    "salary_view_create_task_1": {
         "task": "salary_view_create_task",
         "schedule": crontab(0,0,'*', day_of_month="1"),
     },
@@ -28,86 +28,86 @@ app.conf.beat_schedule = {
         "task": "salary_view_create_task",
         "schedule": crontab(0,0,'*', day_of_month="15"),
     },
-    # "work_day_creater_task": {
-    #     "task": "work_day_creater_task",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_task5": {
-    #     "task": "work_day_creater_task5",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
+    "work_day_creater_task_1": {
+        "task": "work_day_creater_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_task_15": {
+        "task": "work_day_creater_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
 
-    # "work_day_creater_holding_task": {
-    #     "task": "work_day_creater_holding_task",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_holding_task5": {
-    #     "task": "work_day_creater_holding_task5",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
+    "work_day_creater_holding_task_1": {
+        "task": "work_day_creater_holding_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_holding_task_15": {
+        "task": "work_day_creater_holding_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
 
-    # "work_day_creater_company_task": {
-    #     "task": "work_day_creater_company_task",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_company_task5": {
-    #     "task": "work_day_creater_company_task5",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
+    "work_day_creater_company_task_1": {
+        "task": "work_day_creater_company_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_company_task_15": {
+        "task": "work_day_creater_company_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
 
-    # "work_day_creater_office_task": {
-    #     "task": "work_day_creater_office_task",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_office_task5": {
-    #     "task": "work_day_creater_office_task5",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
+    "work_day_creater_office_task_1": {
+        "task": "work_day_creater_office_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_office_task_15": {
+        "task": "work_day_creater_office_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
 
-    # "work_day_creater_shobe_task1": {
-    #     "task": "work_day_creater_shobe_task1",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_shobe_task15": {
-    #     "task": "work_day_creater_shobe_task15",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
+    "work_day_creater_department_task_1": {
+        "task": "work_day_creater_department_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_department_task_15": {
+        "task": "work_day_creater_department_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
 
-    # "work_day_creater_komanda_task1": {
-    #     "task": "work_day_creater_komanda_task1",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_komanda_task15": {
-    #     "task": "work_day_creater_komanda_task15",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
+    "work_day_creater_team_task_1": {
+        "task": "work_day_creater_team_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_team_task_15": {
+        "task": "work_day_creater_team_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
 
-    # "work_day_creater_vezife_task1": {
-    #     "task": "work_day_creater_vezife_task1",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "work_day_creater_vezife_task15": {
-    #     "task": "work_day_creater_vezife_task15",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
-    # "isci_fix_maas_auto_elave_et": {
-    #     "task": "isci_fix_maas_auto_elave_et",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "demo": {
-    #     "task": "demo",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "demo15": {
-    #     "task": "demo",
-    #     "schedule": crontab(0, 0, '*', day_of_month="15"),
-    # },
-    # "backup": {
-    #     "task": "backup",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
-    # "mediabackup": {
-    #     "task": "mediabackup",
-    #     "schedule": crontab(0, 0, '*', day_of_month="1"),
-    # },
+    "work_day_creater_position_task_1": {
+        "task": "work_day_creater_position_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "work_day_creater_position_task_15": {
+        "task": "work_day_creater_position_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
+    "employee_fix_prim_auto_add": {
+        "task": "employee_fix_prim_auto_add",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "demo_create_task_1": {
+        "task": "demo_create_task",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "demo_create_task_15": {
+        "task": "demo_create_task",
+        "schedule": crontab(0, 0, '*', day_of_month="15"),
+    },
+    "backup": {
+        "task": "backup",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
+    "mediabackup": {
+        "task": "mediabackup",
+        "schedule": crontab(0, 0, '*', day_of_month="1"),
+    },
 }

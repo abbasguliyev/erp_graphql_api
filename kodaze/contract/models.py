@@ -24,6 +24,10 @@ from . import (
     SERTLI_ODEME_STATUSU,
     SIFIR_STATUS_CHOICES
 )
+
+from django.db.models import (
+    F
+)
 USER = get_user_model()
 # Create your models here.
 
@@ -126,6 +130,10 @@ class Contract(models.Model):
             ("delete_contract", "Müqavilə silə bilər")
         )
 
+    def save(self, *args, **kwargs) -> None:
+        self.total_amount = self.product_quantity * self.product.price
+        super(Contract, self).save(*args, **kwargs)
+    
     def __str__(self) -> str:
         return f"{self.pk}. contract {self.customer} - {self.product}"
 

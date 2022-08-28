@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import (
     Service, 
     ServicePayment, 
+    ServiceProductForContract
 )
 
 class ServiceAdmin(admin.ModelAdmin):
@@ -22,3 +23,4 @@ class ServicePaymentAdmin(admin.ModelAdmin):
 
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(ServicePayment, ServicePaymentAdmin)
+admin.site.register(ServiceProductForContract)

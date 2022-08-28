@@ -672,9 +672,9 @@ def magnus_installment_create_contract_pdf(canvas, contract):
     new_pdfs = canvas
     # read your existing PDF
     file_path = os.path.join(
-        BASE_DIR, 'media/media/contract_doc/magnus-contract-kredit.pdf')
+        BASE_DIR, 'media/media/contract_doc/magnus-contract-credit.pdf')
     file_path_new = os.path.join(
-        f'media/media/contract_doc/installment/magnus-contract-kredit-{contract.pk}.pdf')
+        f'media/media/contract_doc/installment/magnus-contract-credit-{contract.pk}.pdf')
 
     existing_pdf = PdfFileReader(
         open(file_path, "rb")

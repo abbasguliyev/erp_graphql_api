@@ -121,9 +121,9 @@ def work_day_creater_company_task():
 
     days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-    companyler = Company.objects.all()
+    companies = Company.objects.all()
 
-    for company in companyler:
+    for company in companies:
         company_working_day = CompanyWorkingDay.objects.select_related("company").filter(
             company = company,
             date__year = next_m.year,
@@ -138,7 +138,7 @@ def work_day_creater_company_task():
                 date = f"{next_m.year}-{next_m.month}-{1}"
             )
             company_working_day.save()
-    for company in companyler:
+    for company in companies:
         company_working_day = CompanyWorkingDay.objects.select_related("company").filter(
             company = company,
             date__year = now.year,
@@ -168,9 +168,9 @@ def work_day_creater_office_task():
 
     days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-    officeler = Office.objects.all()
+    offices = Office.objects.all()
 
-    for office in officeler:
+    for office in offices:
         office_working_day = OfficeWorkingDay.objects.select_related("office").filter(
             office = office,
             date__year = next_m.year,
@@ -186,7 +186,7 @@ def work_day_creater_office_task():
             )
             office_working_day.save()
 
-    for office in officeler:
+    for office in offices:
         office_working_day = OfficeWorkingDay.objects.select_related("office").filter(
             office = office,
             date__year = now.year,
@@ -215,9 +215,9 @@ def work_day_creater_department_task():
 
     days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-    departmentler = Department.objects.all()
+    departments = Department.objects.all()
 
-    for department in departmentler:
+    for department in departments:
         department_working_day = DepartmentWorkingDay.objects.select_related("department").filter(
             department = department,
             date__year = next_m.year,
@@ -232,7 +232,7 @@ def work_day_creater_department_task():
                 date = f"{next_m.year}-{next_m.month}-{1}"
             )
             department_working_day.save()
-    for department in departmentler:
+    for department in departments:
         department_working_day = DepartmentWorkingDay.objects.select_related("department").filter(
             department = department,
             date__year = now.year,
@@ -261,11 +261,9 @@ def work_day_creater_team_task():
 
     days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-    teamlar = Team.objects.all()
+    teams = Team.objects.all()
 
-    position = Position.objects.all()
-
-    for team in teamlar:
+    for team in teams:
         team_working_day = TeamWorkingDay.objects.select_related("team").filter(
             team = team,
             date__year = next_m.year,
@@ -281,7 +279,7 @@ def work_day_creater_team_task():
             )
             team_working_day.save()
     
-    for team in teamlar:
+    for team in teams:
         team_working_day = TeamWorkingDay.objects.select_related("team").filter(
             team = team,
             date__year = now.year,
@@ -313,9 +311,9 @@ def work_day_creater_position_task():
 
     days_in_month = pd.Period(f"{next_m.year}-{next_m.month}-{1}").days_in_month
 
-    position = Position.objects.all()
+    positions = Position.objects.all()
 
-    for position in position:
+    for position in positions:
         position_working_day = PositionWorkingDay.objects.select_related("position").filter(
             position = position,
             date__year = next_m.year,
@@ -331,7 +329,7 @@ def work_day_creater_position_task():
             )
             position_working_day.save()
     
-    for position in position:
+    for position in positions:
         position_working_day = PositionWorkingDay.objects.select_related("position").filter(
             position = position,
             date__year =  now.year,
