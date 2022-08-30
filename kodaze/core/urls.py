@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 from api.api import schema
+from graphql_playground.views import GraphQLPlaygroundView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +17,7 @@ urlpatterns = [
     re_path(r"^static/(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT}),
     
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
+    path('playground/', GraphQLPlaygroundView.as_view(endpoint="http://127.0.0.1:8000/graphql")),
 ]
 
 if settings.DEBUG:

@@ -5,8 +5,25 @@ from account.models import (
     Region,
 )
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission, Group
 
 User = get_user_model()
+
+
+def resolve_permission(id):
+    return Permission.objects.filter(id=id).first()
+
+
+def resolve_permissions():
+    return Permission.objects.all()
+
+
+def resolve_group(id):
+    return Group.objects.filter(id=id).first()
+
+
+def resolve_groups():
+    return Group.objects.all()
 
 
 def resolve_cutomer(id):
@@ -29,7 +46,7 @@ def resolve_employee_status(id):
     return EmployeeStatus.objects.filter(id=id).first()
 
 
-def resolve_employee_statuses(id):
+def resolve_employee_statuses():
     return EmployeeStatus.objects.all()
 
 
@@ -37,7 +54,7 @@ def resolve_region(id):
     return Region.objects.filter(id=id).first()
 
 
-def resolve_regions(id):
+def resolve_regions():
     return Region.objects.all()
 
 
@@ -47,7 +64,7 @@ def resolve_user(id):
     ).filter(id=id).first()
 
 
-def resolve_users(id):
+def resolve_users():
     return User.objects.select_related(
         'company', 'office', 'department', 'position', 'team', 'employee_status', 'supervisor'
     ).all()

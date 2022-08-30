@@ -1,11 +1,21 @@
 import graphene
+import graphql_jwt
 from .account.schema import (
+    CustomerMutations,
     CustomerNoteQuery,
+    CustomerNoteMutations,
+    EmployeeStatusMutations,
+    RegionMutations,
+    UserMutations,
     CustomerQuery,
     EmployeeStatusQuery,
     RegionQuery,
-    UserQuery
+    UserQuery,
+    PermissionQuery,
+    GroupQuery,
 )
+
+from graphql_auth.schema import UserQuery as GUserQuery, MeQuery
 
 
 class Query(
@@ -13,15 +23,23 @@ class Query(
     CustomerQuery,
     EmployeeStatusQuery,
     RegionQuery,
-    UserQuery
+    UserQuery,
+    PermissionQuery,
+    GroupQuery,
+    GUserQuery, 
+    MeQuery
 ):
     pass
 
 
 class Mutation(
-
+    CustomerMutations,
+    CustomerNoteMutations,
+    EmployeeStatusMutations,
+    RegionMutations,
+    UserMutations,
 ):
-    pass
+   pass
 
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)

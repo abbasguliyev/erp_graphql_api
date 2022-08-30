@@ -219,7 +219,7 @@ class SalaryView(models.Model):
         USER, on_delete=models.CASCADE, related_name="employee_salary_views")
     sales_quantity = models.PositiveBigIntegerField(default=0, blank=True)
     sales_amount = models.FloatField(default=0, blank=True)
-    final_salary = models.FloatField(default=0, blank=True)
+    final_salary = models.FloatField(default=0, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
 

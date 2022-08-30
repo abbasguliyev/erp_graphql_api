@@ -14,9 +14,8 @@ from . import (
     CUSTOMER_TYPE_CHOICES,
     STANDART,
 )
-from django.db.models import (
-    F
-)
+from django.db.models import F
+
 
 class EmployeeStatus(models.Model):
     status_name = models.CharField(max_length=200)
@@ -42,9 +41,10 @@ class EmployeeStatus(models.Model):
 class User(AbstractUser):
     first_name = models.CharField(_('first name'), max_length=150)
     last_name = models.CharField(_('last name'), max_length=150)
+    email = models.EmailField(_('email address'), null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     start_date_of_work = models.DateField(
-        default=django.utils.timezone.now, blank=True)
+        default=django.utils.timezone.now, null=True, blank=True)
     dismissal_date = models.DateField(null=True, blank=True)
     phone_number_1 = models.CharField(max_length=200)
     phone_number_2 = models.CharField(max_length=200, null=True, blank=True)
@@ -79,7 +79,7 @@ class User(AbstractUser):
         blank=True
     )
     salary = models.DecimalField(
-        default=0, max_digits=12, decimal_places=2, blank=True)
+        default=0, max_digits=12, decimal_places=2, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
     profile_image = models.ImageField(upload_to="media/employee/%Y/%m/%d/", null=True,
                                       blank=True, validators=[file_size, FileExtensionValidator(['png', 'jpeg', 'jpg'])])
@@ -92,17 +92,13 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ("pk",)
-        default_permissions = []
+        default_permissions = ()
         permissions = (
             ("view_user", "Mövcud işçilərə baxa bilər"),
             ("add_user", "İşçi əlavə edə bilər"),
             ("change_user", "İşçi məlumatlarını yeniləyə bilər"),
             ("delete_user", "İşçi silə bilər")
         )
-
-    @property
-    def fullname(self) -> str:
-        return f"{self.first_name} {self.last_name}"
 
     def __str__(self) -> str:
         return f"{self.username}"
@@ -139,10 +135,10 @@ class Customer(models.Model):
     phone_number_2 = models.CharField(max_length=50, null=True, blank=True)
     phone_number_3 = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    address = models.TextField(blank=True)
+    address = models.TextField()
     region = models.ForeignKey(
         Region, on_delete=models.SET_NULL, null=True, blank=True)
-    note = models.TextField(default="", blank=True)
+    note = models.TextField(null=True, blank=True)
     executor = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True, related_name="customers")
     is_active = models.BooleanField(
@@ -168,18 +164,14 @@ class Customer(models.Model):
             ("delete_customer", "Müştəri silə bilər")
         )
 
-    def increase_order_count(self, quantity:int = 1):
+    def increase_order_count(self, quantity: int = 1):
         self.order_count = F("order_count") + quantity
         self.save(update_fields=["order_count"])
-    
-    def decrease_order_count(self, quantity:int = 1):
+
+    def decrease_order_count(self, quantity: int = 1):
         self.order_count = F("order_count") - quantity
         self.save(update_fields=["order_count"])
-    
-    @property
-    def fullname(self) -> str:
-        return f"{self.first_name} {self.last_name} {self.father_name}"
-    
+
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} {self.father_name}"
 

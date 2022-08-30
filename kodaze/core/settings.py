@@ -48,14 +48,6 @@ SESSION_COOKIE_SECURE = False
 # Application definition
 
 INSTALLED_APPS = [
-    # Django modules
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
     # Local apps
     'account.apps.AccountConfig',
     'company.apps.CompanyConfig',
@@ -70,7 +62,16 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'backup_restore.apps.BackupRestoreConfig',
     'update.apps.UpdateConfig',
-    'graphql',
+    
+    # Django modules
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    
 
     # External apps
     'django_celery_beat',
@@ -80,6 +81,9 @@ INSTALLED_APPS = [
     'dbbackup',
     "corsheaders",
     "graphene_django",
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'graphql_auth',
+    'graphql_playground',
 ]
 
 MIDDLEWARE = [
@@ -139,7 +143,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'crm',
+            'NAME': 'kodaze',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
             'HOST': 'localhost',
@@ -148,9 +152,27 @@ else:
     }
 
 GRAPHENE = {
-    "SCHEMA": "api.api.schema"
+    "SCHEMA": "api.api.schema",
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware'
+    ],
 }
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_auth.backends.GraphQLAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+GRAPHQL_JWT = {
+    'JWT_PAYLOAD_HANDLER': 'api.core.utils.jwt_payload',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+    'JWT_EXPIRATION_DELTA': timedelta(days=1),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+    'JWT_SECRET_KEY': os.environ['SECRET_KEY'],
+    'JWT_ALGORITHM': 'HS256',
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -203,7 +225,7 @@ USE_I18N = True
 USE_TZ = True
 
 DATE_FORMAT = ['%d-%m-%Y']
-DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
+DATE_INPUT_FORMATS = ('%d-%m-%Y', '%Y-%m-%d')
 
 USE_L10N = False
 
@@ -239,7 +261,7 @@ CELERY_CACHE_BACKEND = 'default'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'kodaze_cache_table',
+        'LOCATION': 'my_cache_table',
     }
 }
 
