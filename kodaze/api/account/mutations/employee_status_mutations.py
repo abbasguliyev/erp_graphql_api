@@ -10,7 +10,7 @@ from account.models import (
     EmployeeStatus,
 )
 from django_graphene_permissions import permissions_checker
-from account.permissions.employee_status_permissions import (
+from api.account.permissions.employee_status_permissions import (
     EmployeeStatusCreatePermissions,
     EmployeeStatusUpdatePermissions,
     EmployeeStatusDeletePermissions

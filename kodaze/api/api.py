@@ -1,5 +1,4 @@
 import graphene
-import graphql_jwt
 from .account.schema import (
     CustomerMutations,
     CustomerNoteQuery,
@@ -14,8 +13,12 @@ from .account.schema import (
     PermissionQuery,
     GroupQuery,
 )
+from .backup_restore.schema import (
+    BackupAndRestoreMutations,
+    BackupAndRestoreQuery
+)
 
-from graphql_auth.schema import UserQuery as GUserQuery, MeQuery
+from graphql_auth.schema import MeQuery
 
 
 class Query(
@@ -26,8 +29,8 @@ class Query(
     UserQuery,
     PermissionQuery,
     GroupQuery,
-    GUserQuery, 
-    MeQuery
+    MeQuery,
+    BackupAndRestoreQuery,
 ):
     pass
 
@@ -38,6 +41,7 @@ class Mutation(
     EmployeeStatusMutations,
     RegionMutations,
     UserMutations,
+    BackupAndRestoreMutations,
 ):
    pass
 

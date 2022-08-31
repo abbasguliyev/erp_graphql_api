@@ -37,8 +37,6 @@ from .types import (
 )
 from graphql_auth import mutations
 
-from . import filters
-
 from django_graphene_permissions import permissions_checker
 from api.account.permissions.user_permissions import UserReadPermissions
 from api.account.permissions.customer_permissions import CustomerReadPermissions
@@ -46,6 +44,7 @@ from api.account.permissions.customer_note_permissions import CustomerNoteReadPe
 from api.account.permissions.region_permissions import RegionReadPermissions
 from api.account.permissions.employee_status_permissions import EmployeeStatusReadPermissions
 from core.permissions import IsAdminUser
+
 
 class PermissionQuery(graphene.ObjectType):
     permission = graphene.Field(PermissionNode, description="Look up a permission by ID.",
@@ -56,26 +55,27 @@ class PermissionQuery(graphene.ObjectType):
         description="List of permissions.",
         filterset_class=filters.PermissionFilter,
     )
-    
+
     @permissions_checker([IsAdminUser])
     def resolve_permission(self, info, **data):
         id = data.get("id")
         return resolve_permission(id)
-    
+
     @permissions_checker([IsAdminUser])
     def resolve_permissions(self, info, **_kwargs):
         return resolve_permissions()
-        
+
+
 class GroupQuery(graphene.ObjectType):
     group = graphene.Field(GroupNode, description="Look up a group by ID.",
-                                id=graphene.Argument(graphene.ID, description="ID for a group", required=True))
+                           id=graphene.Argument(graphene.ID, description="ID for a group", required=True))
 
     groups = DjangoFilterConnectionField(
         GroupNode,
         description="List of groups.",
         filterset_class=filters.GroupFilter,
     )
-    
+
     @permissions_checker([IsAdminUser])
     def resolve_group(self, info, **data):
         id = data.get("id")
@@ -84,9 +84,8 @@ class GroupQuery(graphene.ObjectType):
     @permissions_checker([IsAdminUser])
     def resolve_groups(self, info, **_kwargs):
         return resolve_groups()
-        
-        
-        
+
+
 class CustomerQuery(graphene.ObjectType):
     customer = graphene.Field(
         CustomerNode,
@@ -104,7 +103,7 @@ class CustomerQuery(graphene.ObjectType):
     def resolve_customer(self, info, **data):
         id = data.get("id")
         return resolve_cutomer(id)
-    
+
     @permissions_checker([CustomerReadPermissions])
     def resolve_customers(self, info, **_kwargs):
         return resolve_customers()
@@ -196,12 +195,13 @@ class UserQuery(graphene.ObjectType):
     def resolve_user(self, info, **data):
         id = data.get("id")
         return resolve_user(id)
-    
+
     @permissions_checker([UserReadPermissions])
     def resolve_users(self, info, **_kwargs):
         return resolve_users()
 
 # ----------------------- Mutations ---------------------------------------
+
 
 class UserMutations(graphene.ObjectType):
     create_user = user_mutations.CreateUser.Field()
@@ -214,7 +214,6 @@ class UserMutations(graphene.ObjectType):
     create_group = user_mutations.CreateGroup.Field()
     update_group = user_mutations.UpdateGroup.Field()
     delete_group = user_mutations.DeleteGroup.Field()
-
 
 
 class CustomerMutations(graphene.ObjectType):

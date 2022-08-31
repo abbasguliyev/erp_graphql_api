@@ -11,7 +11,7 @@ from account.models import (
 )
 
 from django_graphene_permissions import permissions_checker
-from account.permissions.region_permissions import (
+from api.account.permissions.region_permissions import (
     RegionCreatePermissions,
     RegionUpdatePermissions,
     RegionDeletePermissions
