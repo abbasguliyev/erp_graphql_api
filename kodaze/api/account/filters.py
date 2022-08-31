@@ -120,6 +120,7 @@ class CustomerFilter(django_filters.FilterSet):
             'phone_number_2': ['exact', 'icontains'],
             'phone_number_3': ['exact', 'icontains'],
             'email': ['exact', 'icontains'],
+            'customer_type': ['exact', 'icontains'],
             'order_count': ['exact', 'gte', 'lte'],
             'is_active': ['exact'],
             'address': ['exact', 'icontains'],
