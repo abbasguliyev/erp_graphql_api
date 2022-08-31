@@ -89,7 +89,7 @@ class AllRegionCreate(graphene.Mutation):
     message = graphene.String()
 
     @permissions_checker([IsAdminUser])
-    def mutate(cls, root, info, id):
+    def mutate(root, info):
         filename = os.path.join(BASE_DIR, 'cities.json')
         with open(filename) as fp:
             cities = json.load(fp)
