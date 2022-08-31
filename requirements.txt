@@ -21,6 +21,7 @@ django-dbbackup==4.0.1
 django-extensions==3.1.5
 django-filter==21.1
 django-graphene-permissions==0.0.4
+django-graphql-auth==0.3.16
 django-graphql-jwt==0.3.0
 django-graphql-playground==1.0
 django-timezone-field==4.2.3
