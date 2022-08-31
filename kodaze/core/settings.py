@@ -28,7 +28,7 @@ load_dotenv(find_dotenv())
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-__PRODUCTION__ = False
+__PRODUCTION__ = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if __PRODUCTION__ == True:
@@ -48,6 +48,14 @@ SESSION_COOKIE_SECURE = False
 # Application definition
 
 INSTALLED_APPS = [
+    # Django modules
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
     # Local apps
     'account.apps.AccountConfig',
     'company.apps.CompanyConfig',
@@ -62,16 +70,6 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'backup_restore.apps.BackupRestoreConfig',
     'update.apps.UpdateConfig',
-    
-    # Django modules
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    
 
     # External apps
     'django_celery_beat',
