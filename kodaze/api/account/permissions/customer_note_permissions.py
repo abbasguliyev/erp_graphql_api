@@ -8,10 +8,10 @@ class CustomerNoteCreatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "add_customernote" == perm.codename:
+                if "add_customernote" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("add_customernote"):
+        if user.has_perm("add_customernote") or user.is_superuser:
             return True
 
 class CustomerNoteUpdatePermissions(BasePermission):
@@ -22,10 +22,10 @@ class CustomerNoteUpdatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "change_customernote" == perm.codename:
+                if "change_customernote" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("change_customernote"):
+        if user.has_perm("change_customernote") or user.is_superuser:
             return True
        
 class CustomerNoteDeletePermissions(BasePermission):
@@ -36,10 +36,10 @@ class CustomerNoteDeletePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "delete_customernote" == perm.codename:
+                if "delete_customernote" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("delete_customernote"):
+        if user.has_perm("delete_customernote") or user.is_superuser:
             return True
 
 class CustomerNoteReadPermissions(BasePermission):
@@ -50,8 +50,8 @@ class CustomerNoteReadPermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "view_customernote" == perm.codename:
+                if "view_customernote" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("view_customernote"):
+        if user.has_perm("view_customernote") or user.is_superuser:
             return True     

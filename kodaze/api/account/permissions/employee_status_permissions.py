@@ -8,10 +8,10 @@ class EmployeeStatusCreatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "add_employeestatus" == perm.codename:
+                if "add_employeestatus" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("add_employeestatus"):
+        if user.has_perm("add_employeestatus") or user.is_superuser:
             return True
 
 class EmployeeStatusUpdatePermissions(BasePermission):
@@ -22,10 +22,10 @@ class EmployeeStatusUpdatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "change_employeestatus" == perm.codename:
+                if "change_employeestatus" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("change_employeestatus"):
+        if user.has_perm("change_employeestatus") or user.is_superuser:
             return True
        
 class EmployeeStatusDeletePermissions(BasePermission):
@@ -36,10 +36,10 @@ class EmployeeStatusDeletePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "delete_employeestatus" == perm.codename:
+                if "delete_employeestatus" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("delete_employeestatus"):
+        if user.has_perm("delete_employeestatus") or user.is_superuser:
             return True
 
 class EmployeeStatusReadPermissions(BasePermission):
@@ -50,8 +50,8 @@ class EmployeeStatusReadPermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "view_employeestatus" == perm.codename:
+                if "view_employeestatus" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("view_employeestatus"):
+        if user.has_perm("view_employeestatus") or user.is_superuser:
             return True     

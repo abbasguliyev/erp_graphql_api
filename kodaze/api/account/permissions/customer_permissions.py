@@ -8,10 +8,10 @@ class CustomerCreatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "add_customer" == perm.codename:
+                if "add_customer" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("add_customer"):
+        if user.has_perm("add_customer") or user.is_superuser:
             return True
 
 class CustomerUpdatePermissions(BasePermission):
@@ -22,10 +22,10 @@ class CustomerUpdatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "change_customer" == perm.codename:
+                if "change_customer" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("change_customer"):
+        if user.has_perm("change_customer") or user.is_superuser:
             return True
        
 class CustomerDeletePermissions(BasePermission):
@@ -36,10 +36,10 @@ class CustomerDeletePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "delete_customer" == perm.codename:
+                if "delete_customer" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("delete_customer"):
+        if user.has_perm("delete_customer") or user.is_superuser:
             return True
 
 class CustomerReadPermissions(BasePermission):
@@ -50,8 +50,8 @@ class CustomerReadPermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "view_customer" == perm.codename:
+                if "view_customer" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("view_customer"):
+        if user.has_perm("view_customer") or user.is_superuser:
             return True     
