@@ -131,7 +131,7 @@ class CustomerFilter(django_filters.FilterSet):
             'region__region_name': ['exact', 'icontains'],
         }
 
-    def phone_number(self, queryset, name, value):
+    def phone_number_filter(self, queryset, name, value):
         qs = None
         for term in value.split():
             qs = Customer.objects.filter(
