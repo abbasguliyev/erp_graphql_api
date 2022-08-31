@@ -30,7 +30,7 @@ class Cashbox(models.Model):
 
 
 class OfficeCashbox(Cashbox):
-    office = models.ForeignKey(
+    office = models.OneToOneField(
         "company.Office", on_delete=models.CASCADE, related_name="cashboxs")
 
     class Meta:
@@ -48,7 +48,7 @@ class OfficeCashbox(Cashbox):
 
 
 class CompanyCashbox(Cashbox):
-    company = models.ForeignKey(
+    company = models.OneToOneField(
         "company.Company", on_delete=models.CASCADE, related_name="cashboxs")
 
     class Meta:
@@ -66,7 +66,7 @@ class CompanyCashbox(Cashbox):
 
 
 class HoldingCashbox(Cashbox):
-    holding = models.ForeignKey(
+    holding = models.OneToOneField(
         "company.Holding", on_delete=models.CASCADE, related_name="cashboxs")
 
     class Meta:

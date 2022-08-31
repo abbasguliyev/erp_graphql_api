@@ -1,6 +1,6 @@
 from django_graphene_permissions.permissions import BasePermission
 
-class UserCreatePermissions(BasePermission):
+class OfficeCashboxCreatePermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -8,13 +8,13 @@ class UserCreatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "add_user" == perm.codename or user.is_superuser:
+                if "add_officecashbox" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("add_user") or user.is_superuser:
+        if user.has_perm("add_officecashbox") or user.is_superuser:
             return True
 
-class UserUpdatePermissions(BasePermission):
+class OfficeCashboxUpdatePermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -22,13 +22,13 @@ class UserUpdatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "change_user" == perm.codename or user.is_superuser:
+                if "change_officecashbox" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("change_user") or user.is_superuser:
+        if user.has_perm("change_officecashbox") or user.is_superuser:
             return True
        
-class UserDeletePermissions(BasePermission):
+class OfficeCashboxDeletePermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -36,13 +36,13 @@ class UserDeletePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "delete_user" == perm.codename or user.is_superuser:
+                if "delete_officecashbox" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("delete_user") or user.is_superuser:
+        if user.has_perm("delete_officecashbox") or user.is_superuser:
             return True
 
-class UserReadPermissions(BasePermission):
+class OfficeCashboxReadPermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -50,8 +50,8 @@ class UserReadPermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "view_user" == perm.codename or user.is_superuser:
+                if "view_officecashbox" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("view_user") or user.is_superuser:
+        if user.has_perm("view_officecashbox") or user.is_superuser:
             return True     

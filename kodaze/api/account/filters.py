@@ -55,14 +55,11 @@ class UserFilter(django_filters.FilterSet):
     fullname = django_filters.CharFilter(method="fullname_filter")
     supervisor_fullname = django_filters.CharFilter(
         method="supervisor_fullname_filter")
-
+    phone_number = django_filters.CharFilter(method="phone_number_filter")
+    
     class Meta:
         model = User
         fields = {
-            'first_name': ['exact', 'icontains'],
-            'last_name': ['exact', 'icontains'],
-            'phone_number_1': ['exact', 'icontains'],
-            'phone_number_2': ['exact', 'icontains'],
             'position__name': ['exact', 'icontains'],
             'position': ['exact'],
             'is_superuser': ['exact'],
@@ -76,6 +73,13 @@ class UserFilter(django_filters.FilterSet):
             'employee_status__status_name': ['exact', 'icontains'],
         }
 
+    def phone_number_filter(self, queryset, name, value):
+        qs = None
+        for term in value.split():
+            qs = User.objects.filter(
+                Q(phone_number_1__icontains=term) | Q(phone_number_2__icontains=term))
+        return qs
+    
     def fullname_filter(self, queryset, name, value):
         qs = None
         for term in value.split():
@@ -116,19 +120,14 @@ class CustomerFilter(django_filters.FilterSet):
     class Meta:
         model = Customer
         fields = {
-            'phone_number_1': ['exact', 'icontains'],
-            'phone_number_2': ['exact', 'icontains'],
-            'phone_number_3': ['exact', 'icontains'],
             'email': ['exact', 'icontains'],
             'customer_type': ['exact', 'icontains'],
             'order_count': ['exact', 'gte', 'lte'],
             'is_active': ['exact'],
             'address': ['exact', 'icontains'],
             'executor': ['exact'],
-            'executor__company': ['exact'],
-            'executor__company__name': ['exact', 'icontains'],
-            'executor__office': ['exact'],
-            'executor__office__name': ['exact', 'icontains'],
+            'contracts__product__company__name': ['exact', 'icontains'],
+            'contracts__office__name': ['exact', 'icontains'],
             'region__region_name': ['exact', 'icontains'],
         }
 
@@ -168,9 +167,6 @@ class CustomerNoteFilter(django_filters.FilterSet):
         model=CustomerNote
         fields={
             'customer': ['exact'],
-            'customer__phone_number_1': ['exact', 'icontains'],
-            'customer__phone_number_2': ['exact', 'icontains'],
-            'customer__phone_number_3': ['exact', 'icontains'],
             'customer__email': ['exact', 'icontains'],
             'customer__region__region_name': ['exact', 'icontains'],
             'customer__region': ['exact'],

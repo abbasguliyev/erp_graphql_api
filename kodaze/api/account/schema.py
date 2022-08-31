@@ -12,9 +12,9 @@ from api.account.mutations import (
 from . import filters
 from .resolvers import (
     resolve_customers,
-    resolve_cutomer,
-    resolve_cutomer_notes,
-    resolve_cutomer_note,
+    resolve_customer,
+    resolve_customer_notes,
+    resolve_customer_note,
     resolve_employee_status,
     resolve_employee_statuses,
     resolve_group,
@@ -102,7 +102,7 @@ class CustomerQuery(graphene.ObjectType):
     @permissions_checker([CustomerReadPermissions])
     def resolve_customer(self, info, **data):
         id = data.get("id")
-        return resolve_cutomer(id)
+        return resolve_customer(id)
 
     @permissions_checker([CustomerReadPermissions])
     def resolve_customers(self, info, **_kwargs):
@@ -125,11 +125,11 @@ class CustomerNoteQuery(graphene.ObjectType):
     @permissions_checker([CustomerNoteReadPermissions])
     def resolve_customer_note(self, info, **data):
         id = data.get("id")
-        return resolve_cutomer_note(id)
+        return resolve_customer_note(id)
 
     @permissions_checker([CustomerNoteReadPermissions])
     def resolve_customer_notes(self, info, **_kwargs):
-        return resolve_cutomer_notes()
+        return resolve_customer_notes()
 
 
 class EmployeeStatusQuery(graphene.ObjectType):

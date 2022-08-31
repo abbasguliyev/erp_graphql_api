@@ -1,6 +1,6 @@
 from django_graphene_permissions.permissions import BasePermission
 
-class UserCreatePermissions(BasePermission):
+class CashFlowCreatePermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -8,13 +8,13 @@ class UserCreatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "add_user" == perm.codename or user.is_superuser:
+                if "add_cashflow" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("add_user") or user.is_superuser:
+        if user.has_perm("add_cashflow") or user.is_superuser:
             return True
 
-class UserUpdatePermissions(BasePermission):
+class CashFlowUpdatePermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -22,13 +22,13 @@ class UserUpdatePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "change_user" == perm.codename or user.is_superuser:
+                if "change_cashflow" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("change_user") or user.is_superuser:
+        if user.has_perm("change_cashflow") or user.is_superuser:
             return True
        
-class UserDeletePermissions(BasePermission):
+class CashFlowDeletePermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -36,13 +36,13 @@ class UserDeletePermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "delete_user" == perm.codename or user.is_superuser:
+                if "delete_cashflow" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("delete_user") or user.is_superuser:
+        if user.has_perm("delete_cashflow") or user.is_superuser:
             return True
 
-class UserReadPermissions(BasePermission):
+class CashFlowReadPermissions(BasePermission):
     @staticmethod
     def has_permission(context):
         user = context.user
@@ -50,8 +50,8 @@ class UserReadPermissions(BasePermission):
         for permission_group in permission_groups:
             all_permissions = permission_group.permissions.all()
             for perm in all_permissions:
-                if "view_user" == perm.codename or user.is_superuser:
+                if "view_cashflow" == perm.codename or user.is_superuser:
                     return True
 
-        if user.has_perm("view_user") or user.is_superuser:
+        if user.has_perm("view_cashflow") or user.is_superuser:
             return True     

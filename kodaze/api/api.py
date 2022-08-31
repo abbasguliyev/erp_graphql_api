@@ -17,6 +17,15 @@ from .backup_restore.schema import (
     BackupAndRestoreMutations,
     BackupAndRestoreQuery
 )
+from .cashbox.schema import (
+    CashFlowQuery,
+    CompanyCashboxQuery,
+    HoldingCashboxQuery,
+    OfficeCashboxQuery,
+    HoldingCashboxMutations,
+    CompanyCashboxMutations,
+    OfficeCashboxMutations
+)
 
 from graphql_auth.schema import MeQuery
 
@@ -31,6 +40,10 @@ class Query(
     GroupQuery,
     MeQuery,
     BackupAndRestoreQuery,
+    CashFlowQuery,
+    CompanyCashboxQuery,
+    HoldingCashboxQuery,
+    OfficeCashboxQuery
 ):
     pass
 
@@ -42,8 +55,11 @@ class Mutation(
     RegionMutations,
     UserMutations,
     BackupAndRestoreMutations,
+    HoldingCashboxMutations,
+    CompanyCashboxMutations,
+    OfficeCashboxMutations
 ):
-   pass
+    pass
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

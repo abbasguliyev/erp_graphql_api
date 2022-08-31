@@ -26,7 +26,7 @@ def resolve_groups():
     return Group.objects.all()
 
 
-def resolve_cutomer(id):
+def resolve_customer(id):
     return Customer.objects.select_related('region', 'executor').filter(id=id).first()
 
 
@@ -34,11 +34,11 @@ def resolve_customers():
     return Customer.objects.select_related('region', 'executor').all()
 
 
-def resolve_cutomer_note(id):
+def resolve_customer_note(id):
     return CustomerNote.objects.select_related('customer').filter(id=id).first()
 
 
-def resolve_cutomer_notes():
+def resolve_customer_notes():
     return CustomerNote.objects.select_related('customer').all()
 
 
