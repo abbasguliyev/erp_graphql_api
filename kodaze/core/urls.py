@@ -17,7 +17,7 @@ urlpatterns = [
     re_path(r"^static/(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT}),
     
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
-    path('playground/', GraphQLPlaygroundView.as_view(endpoint="http://127.0.0.1:8000/graphql")),
+    path('playground/', GraphQLPlaygroundView.as_view(endpoint="https://do.kodaze.com/graphql")),
 ]
 
 if settings.DEBUG:
