@@ -109,6 +109,7 @@ class RegionFilter(django_filters.FilterSet):
 
 class CustomerFilter(django_filters.FilterSet):
     fullname = django_filters.CharFilter(method="fullname_filter")
+    phone_number = django_filters.CharFilter(method="phone_number_filter")
     executor_fullname = django_filters.CharFilter(
         method="executor_fullname_filter")
 
@@ -123,9 +124,20 @@ class CustomerFilter(django_filters.FilterSet):
             'is_active': ['exact'],
             'address': ['exact', 'icontains'],
             'executor': ['exact'],
+            'executor__company': ['exact'],
+            'executor__company__name': ['exact', 'icontains'],
+            'executor__office': ['exact'],
+            'executor__office__name': ['exact', 'icontains'],
             'region__region_name': ['exact', 'icontains'],
         }
 
+    def phone_number(self, queryset, name, value):
+        qs = None
+        for term in value.split():
+            qs = Customer.objects.filter(
+                Q(phone_number_1__icontains=term) | Q(phone_number_2__icontains=term) | Q(phone_number_3__icontains=term))
+        return qs
+    
     def fullname_filter(self, queryset, name, value):
         qs = None
         for term in value.split():
