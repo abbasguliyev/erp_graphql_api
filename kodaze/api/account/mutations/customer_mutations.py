@@ -29,6 +29,7 @@ class CreateCustomer(graphene.Mutation):
 
     customer = graphene.Field(CustomerNode)
     message = graphene.String()
+
     class Meta:
         description = "Create new Customer"
         model = Customer
@@ -46,7 +47,8 @@ class CreateCustomer(graphene.Mutation):
         except:
             photo_ID = None
         try:
-            back_photo_of_ID = info.context.FILES[input.get("back_photo_of_ID")]
+            back_photo_of_ID = info.context.FILES[input.get(
+                "back_photo_of_ID")]
         except:
             back_photo_of_ID = None
         customer = Customer()
@@ -78,6 +80,7 @@ class UpdateCustomer(graphene.Mutation):
 
     customer = graphene.Field(CustomerNode)
     message = graphene.String()
+
     class Meta:
         description = "Update Customer"
         model = Customer
@@ -89,18 +92,19 @@ class UpdateCustomer(graphene.Mutation):
         message = "Customer updated"
         return UpdateCustomer(customer=customer, message=message)
 
+
 class DeleteCustomer(graphene.Mutation):
     class Arguments:
         id = graphene.ID(required=True, description="ID of a customer")
 
     message = graphene.String()
-    
+
     class Meta:
         description = "Delete Customer"
         model = Customer
-    
+
     @permissions_checker([CustomerDeletePermissions])
     def mutate(root, info, id):
-        customer = Customer.objects.get(pk=id).delete()
+        Customer.objects.get(pk=id).delete()
         message = "Customer deleted"
         return DeleteCustomer(message=message)

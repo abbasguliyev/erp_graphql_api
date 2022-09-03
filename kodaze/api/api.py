@@ -27,6 +27,25 @@ from .cashbox.schema import (
     OfficeCashboxMutations
 )
 
+from .company.schema import (
+    HoldingQuery,
+    OfficeQuery,
+    CompanyQuery,
+    DepartmentQuery,
+    TeamQuery,
+    PositionQuery,
+    PermissionForPositionQuery,
+    AppLogoQuery,
+    HoldingMutations,
+    CompanyMutations,
+    OfficeMutations,
+    DepartmentMutations,
+    PermissionForPositionMutations,
+    TeamMutations,
+    AppLogoMutations,
+    PositionMutations
+)
+
 from graphql_auth.schema import MeQuery
 
 
@@ -43,7 +62,15 @@ class Query(
     CashFlowQuery,
     CompanyCashboxQuery,
     HoldingCashboxQuery,
-    OfficeCashboxQuery
+    OfficeCashboxQuery,
+    HoldingQuery,
+    OfficeQuery,
+    CompanyQuery,
+    DepartmentQuery,
+    TeamQuery,
+    PositionQuery,
+    PermissionForPositionQuery,
+    AppLogoQuery,
 ):
     pass
 
@@ -57,7 +84,15 @@ class Mutation(
     BackupAndRestoreMutations,
     HoldingCashboxMutations,
     CompanyCashboxMutations,
-    OfficeCashboxMutations
+    OfficeCashboxMutations,
+    HoldingMutations,
+    CompanyMutations,
+    OfficeMutations,
+    DepartmentMutations,
+    PermissionForPositionMutations,
+    TeamMutations,
+    AppLogoMutations,
+    PositionMutations
 ):
     pass
 

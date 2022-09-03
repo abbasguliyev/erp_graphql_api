@@ -7,11 +7,13 @@ from account.models import (
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission, Group
 
+from graphql import GraphQLError
+
 User = get_user_model()
 
 
 def resolve_permission(id):
-    return Permission.objects.filter(id=id).first()
+    return Permission.objects.get(id=id)
 
 
 def resolve_permissions():
@@ -19,7 +21,7 @@ def resolve_permissions():
 
 
 def resolve_group(id):
-    return Group.objects.filter(id=id).first()
+    return Group.objects.get(id=id)
 
 
 def resolve_groups():
@@ -27,15 +29,14 @@ def resolve_groups():
 
 
 def resolve_customer(id):
-    return Customer.objects.select_related('region', 'executor').filter(id=id).first()
-
+    return Customer.objects.select_related('region', 'executor').get(id=id)
 
 def resolve_customers():
     return Customer.objects.select_related('region', 'executor').all()
 
 
 def resolve_customer_note(id):
-    return CustomerNote.objects.select_related('customer').filter(id=id).first()
+    return CustomerNote.objects.select_related('customer').get(id=id)
 
 
 def resolve_customer_notes():
@@ -43,7 +44,7 @@ def resolve_customer_notes():
 
 
 def resolve_employee_status(id):
-    return EmployeeStatus.objects.filter(id=id).first()
+    return EmployeeStatus.objects.get(id=id)
 
 
 def resolve_employee_statuses():
@@ -51,7 +52,7 @@ def resolve_employee_statuses():
 
 
 def resolve_region(id):
-    return Region.objects.filter(id=id).first()
+    return Region.objects.get(id=id)
 
 
 def resolve_regions():
@@ -61,7 +62,7 @@ def resolve_regions():
 def resolve_user(id):
     return User.objects.select_related(
         'company', 'office', 'department', 'position', 'team', 'employee_status', 'supervisor'
-    ).filter(id=id).first()
+    ).get(id=id)
 
 
 def resolve_users():
