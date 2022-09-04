@@ -46,6 +46,15 @@ from .company.schema import (
     PositionMutations
 )
 
+from .product.schema import (
+    ProductQuery,
+    CategoryQuery,
+    UnitOfMeasureQuery,
+    ProductMutations,
+    CategoryMutations,
+    UnitOfMeasureMutations
+)
+
 from graphql_auth.schema import MeQuery
 
 
@@ -71,6 +80,9 @@ class Query(
     PositionQuery,
     PermissionForPositionQuery,
     AppLogoQuery,
+    ProductQuery,
+    CategoryQuery,
+    UnitOfMeasureQuery,
 ):
     pass
 
@@ -92,7 +104,10 @@ class Mutation(
     PermissionForPositionMutations,
     TeamMutations,
     AppLogoMutations,
-    PositionMutations
+    PositionMutations,
+    ProductMutations,
+    CategoryMutations,
+    UnitOfMeasureMutations
 ):
     pass
 

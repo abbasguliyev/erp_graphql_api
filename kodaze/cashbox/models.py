@@ -37,10 +37,10 @@ class OfficeCashbox(Cashbox):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_officecashbox", "Mövcud ofis kassalara baxa bilər"),
-            ("add_officecashbox", "Ofis kassa əlavə edə bilər"),
-            ("change_officecashbox", "Ofis kassa məlumatlarını yeniləyə bilər"),
-            ("delete_officecashbox", "Ofis kassa silə bilər")
+            ("view_officecashbox", "Mövcud ofis cashboxlara baxa bilər"),
+            ("add_officecashbox", "Office cashbox əlavə edə bilər"),
+            ("change_officecashbox", "Office cashbox məlumatlarını yeniləyə bilər"),
+            ("delete_officecashbox", "Office cashbox silə bilər")
         )
 
     def __str__(self) -> str:
@@ -55,10 +55,10 @@ class CompanyCashbox(Cashbox):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_companycashbox", "Mövcud şirkət kassalara baxa bilər"),
-            ("add_companycashbox", "Şirkət kassa əlavə edə bilər"),
-            ("change_companycashbox", "Şirkət kassa məlumatlarını yeniləyə bilər"),
-            ("delete_companycashbox", "Şirkət kassa silə bilər")
+            ("view_companycashbox", "Mövcud şirkət cashboxlara baxa bilər"),
+            ("add_companycashbox", "Şirkət cashbox əlavə edə bilər"),
+            ("change_companycashbox", "Şirkət cashbox məlumatlarını yeniləyə bilər"),
+            ("delete_companycashbox", "Şirkət cashbox silə bilər")
         )
 
     def __str__(self) -> str:
@@ -73,10 +73,10 @@ class HoldingCashbox(Cashbox):
         ordering = ("pk",)
         default_permissions = []
         permissions = (
-            ("view_holdingcashbox", "Mövcud holdinq kassalara baxa bilər"),
-            ("add_holdingcashbox", "Holdinq kassa əlavə edə bilər"),
-            ("change_holdingcashbox", "Holdinq kassa məlumatlarını yeniləyə bilər"),
-            ("delete_holdingcashbox", "Holdinq kassa silə bilər")
+            ("view_holdingcashbox", "Mövcud holdinq cashboxlara baxa bilər"),
+            ("add_holdingcashbox", "Holdinq cashbox əlavə edə bilər"),
+            ("change_holdingcashbox", "Holdinq cashbox məlumatlarını yeniləyə bilər"),
+            ("delete_holdingcashbox", "Holdinq cashbox silə bilər")
         )
 
     def __str__(self) -> str:

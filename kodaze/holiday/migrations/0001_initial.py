@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('pk',),
-                'permissions': (('view_officeworkingday', 'Mövcud ofis tətil günlərinə baxa bilər'), ('add_officeworkingday', 'Ofis tətil günü əlavə edə bilər'), ('change_officeworkingday', 'Ofisin tətil günü məlumatlarını yeniləyə bilər'), ('delete_officeworkingday', 'Ofisin tətil gününü silə bilər')),
+                'permissions': (('view_officeworkingday', 'Mövcud ofis tətil günlərinə baxa bilər'), ('add_officeworkingday', 'Office tətil günü əlavə edə bilər'), ('change_officeworkingday', 'Officein tətil günü məlumatlarını yeniləyə bilər'), ('delete_officeworkingday', 'Officein tətil gününü silə bilər')),
                 'default_permissions': [],
             },
         ),
@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('pk',),
-                'permissions': (('view_officeexceptionworker', 'Mövcud ofis istisna işçilərə baxa bilər'), ('add_officeexceptionworker', 'Ofis istisna işçi əlavə edə bilər'), ('change_officeexceptionworker', 'Ofis istisna işçi məlumatlarını yeniləyə bilər'), ('delete_officeexceptionworker', 'Ofis istisna işçiməlumatalrını silə bilər')),
+                'permissions': (('view_officeexceptionworker', 'Mövcud ofis istisna işçilərə baxa bilər'), ('add_officeexceptionworker', 'Office istisna işçi əlavə edə bilər'), ('change_officeexceptionworker', 'Office istisna işçi məlumatlarını yeniləyə bilər'), ('delete_officeexceptionworker', 'Office istisna işçiməlumatalrını silə bilər')),
                 'default_permissions': [],
             },
         ),

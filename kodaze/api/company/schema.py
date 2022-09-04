@@ -44,7 +44,6 @@ from .mutations import (
     team_mutations,
 )
 
-from core.permissions import IsAdminUser
 from django_graphene_permissions import permissions_checker
 from api.company.permissions import (
     company_permissions,

@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='OfficeKassaIncome',
+            name='OfficeCashboxIncome',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.FloatField(default=0)),
@@ -31,12 +31,12 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('-pk',),
-                'permissions': (('view_officecashboxincome', 'Mövcud ofis kassa mədaxillərə baxa bilər'), ('add_officecashboxincome', 'Ofis kassa mədaxil əlavə edə bilər'), ('change_officecashboxincome', 'Ofis kassa mədaxil məlumatlarını yeniləyə bilər'), ('delete_officecashboxincome', 'Ofis kassa mədaxil silə bilər')),
+                'permissions': (('view_officecashboxincome', 'Mövcud ofis cashbox mədaxillərə baxa bilər'), ('add_officecashboxincome', 'Office cashbox mədaxil əlavə edə bilər'), ('change_officecashboxincome', 'Office cashbox mədaxil məlumatlarını yeniləyə bilər'), ('delete_officecashboxincome', 'Office cashbox mədaxil silə bilər')),
                 'default_permissions': [],
             },
         ),
         migrations.CreateModel(
-            name='OfficeKassaExpense',
+            name='OfficeCashboxExpense',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.FloatField(default=0)),
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('-pk',),
-                'permissions': (('view_officecashboxexpense', 'Mövcud office kassa məxariclərə baxa bilər'), ('add_officecashboxexpense', 'Office kassa məxaric əlavə edə bilər'), ('change_officecashboxexpense', 'Office kassa məxaric məlumatlarını yeniləyə bilər'), ('delete_officecashboxexpense', 'Office kassa məxaric silə bilər')),
+                'permissions': (('view_officecashboxexpense', 'Mövcud office cashbox məxariclərə baxa bilər'), ('add_officecashboxexpense', 'Office cashbox məxaric əlavə edə bilər'), ('change_officecashboxexpense', 'Office cashbox məxaric məlumatlarını yeniləyə bilər'), ('delete_officecashboxexpense', 'Office cashbox məxaric silə bilər')),
                 'default_permissions': [],
             },
         ),
@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('-pk',),
-                'permissions': (('view_holdingcashboxincome', 'Mövcud holdinq kassa mədaxillərə baxa bilər'), ('add_holdingcashboxincome', 'Holdinq kassa mədaxil əlavə edə bilər'), ('change_holdingcashboxincome', 'Holdinq kassa mədaxil məlumatlarını yeniləyə bilər'), ('delete_holdingcashboxincome', 'Holdinq kassa mədaxil silə bilər')),
+                'permissions': (('view_holdingcashboxincome', 'Mövcud holdinq cashbox mədaxillərə baxa bilər'), ('add_holdingcashboxincome', 'Holdinq cashbox mədaxil əlavə edə bilər'), ('change_holdingcashboxincome', 'Holdinq cashbox mədaxil məlumatlarını yeniləyə bilər'), ('delete_holdingcashboxincome', 'Holdinq cashbox mədaxil silə bilər')),
                 'default_permissions': [],
             },
         ),
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('-pk',),
-                'permissions': (('view_holdingcashboxexpense', 'Mövcud holdinq kassa məxariclərə baxa bilər'), ('add_holdingcashboxexpense', 'Holdinq kassa məxaric əlavə edə bilər'), ('change_holdingcashboxexpense', 'Holdinq kassa məxaric məlumatlarını yeniləyə bilər'), ('delete_holdingcashboxexpense', 'Holdinq kassa məxaric silə bilər')),
+                'permissions': (('view_holdingcashboxexpense', 'Mövcud holdinq cashbox məxariclərə baxa bilər'), ('add_holdingcashboxexpense', 'Holdinq cashbox məxaric əlavə edə bilər'), ('change_holdingcashboxexpense', 'Holdinq cashbox məxaric məlumatlarını yeniləyə bilər'), ('delete_holdingcashboxexpense', 'Holdinq cashbox məxaric silə bilər')),
                 'default_permissions': [],
             },
         ),
@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('-pk',),
-                'permissions': (('view_companycashboxincome', 'Mövcud şirkət kassa mədaxillərə baxa bilər'), ('add_companycashboxincome', 'Şirkət kassa mədaxil əlavə edə bilər'), ('change_companycashboxincome', 'Şirkət kassa mədaxil məlumatlarını yeniləyə bilər'), ('delete_companycashboxincome', 'Şirkət kassa mədaxil silə bilər')),
+                'permissions': (('view_companycashboxincome', 'Mövcud şirkət cashbox mədaxillərə baxa bilər'), ('add_companycashboxincome', 'Şirkət cashbox mədaxil əlavə edə bilər'), ('change_companycashboxincome', 'Şirkət cashbox mədaxil məlumatlarını yeniləyə bilər'), ('delete_companycashboxincome', 'Şirkət cashbox mədaxil silə bilər')),
                 'default_permissions': [],
             },
         ),
@@ -124,7 +124,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('-pk',),
-                'permissions': (('view_companycashboxexpense', 'Mövcud şirkət kassa məxariclərə baxa bilər'), ('add_companycashboxexpense', 'Şirkət kassa məxaric əlavə edə bilər'), ('change_companycashboxexpense', 'Şirkət kassa məxaric məlumatlarını yeniləyə bilər'), ('delete_companycashboxexpense', 'Şirkət kassa məxaric silə bilər')),
+                'permissions': (('view_companycashboxexpense', 'Mövcud şirkət cashbox məxariclərə baxa bilər'), ('add_companycashboxexpense', 'Şirkət cashbox məxaric əlavə edə bilər'), ('change_companycashboxexpense', 'Şirkət cashbox məxaric məlumatlarını yeniləyə bilər'), ('delete_companycashboxexpense', 'Şirkət cashbox məxaric silə bilər')),
                 'default_permissions': [],
             },
         ),

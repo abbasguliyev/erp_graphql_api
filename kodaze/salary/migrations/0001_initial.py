@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('pk',),
-                'permissions': (('view_vanleaderprimnew', 'Mövcud vanleader primlərə baxa bilər'), ('add_vanleaderprimnew', 'Vanleader prim əlavə edə bilər'), ('change_vanleaderprimnew', 'Vanleader prim məlumatlarını yeniləyə bilər'), ('delete_vanleaderprimnew', 'Vanleader prim silə bilər')),
+                'permissions': (('view_responsible_employee_1primnew', 'Mövcud responsible_employee_1 primlərə baxa bilər'), ('add_responsible_employee_1primnew', 'Vanleader prim əlavə edə bilər'), ('change_responsible_employee_1primnew', 'Vanleader prim məlumatlarını yeniləyə bilər'), ('delete_responsible_employee_1primnew', 'Vanleader prim silə bilər')),
                 'default_permissions': [],
             },
         ),

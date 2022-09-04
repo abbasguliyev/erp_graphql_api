@@ -51,7 +51,7 @@ class CreateCompanyCashbox(graphene.Mutation):
 
         create_cash_flow(
             company=company,
-            description=f"{company.name} şirkət kassasına {float(balance)} AZN əlavə edildi",
+            description=f"{company.name} şirkət cashboxsına {float(balance)} AZN əlavə edildi",
             initial_balance=initial_balance,
             subsequent_balance=subsequent_balance,
             company_initial_balance=company_initial_balance,
@@ -93,7 +93,7 @@ class UpdateCompanyCashbox(graphene.Mutation):
 
         create_cash_flow(
             company=company_cashbox.company,
-            description=f"{company_cashbox.company.name} şirkət kassasına {float(balance)} AZN əlavə edildi",
+            description=f"{company_cashbox.company.name} şirkət cashboxsına {float(balance)} AZN əlavə edildi",
             initial_balance=initial_balance,
             subsequent_balance=subsequent_balance,
             company_initial_balance=company_initial_balance,

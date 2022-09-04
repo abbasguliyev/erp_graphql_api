@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('pk',),
-                'permissions': (('view_customernote', 'Mövcud müştəri qeydlərinə baxa bilər'), ('add_customernote', 'Müştəri qeydi əlavə edə bilər'), ('change_customernote', 'Müştəri qeydinin məlumatlarını yeniləyə bilər'), ('delete_customernote', 'Müştəri qeydlərini silə bilər')),
+                'permissions': (('view_customernote', 'Mövcud müştəri notelərinə baxa bilər'), ('add_customernote', 'Müştəri notei əlavə edə bilər'), ('change_customernote', 'Müştəri noteinin məlumatlarını yeniləyə bilər'), ('delete_customernote', 'Müştəri notelərini silə bilər')),
                 'default_permissions': [],
             },
         ),

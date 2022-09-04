@@ -50,7 +50,7 @@ class CreateHoldingCashbox(graphene.Mutation):
 
         create_cash_flow(
             holding=holding,
-            description=f"{holding.name} holdinq kassasına {float(balance)} AZN əlavə edildi",
+            description=f"{holding.name} holdinq cashboxsına {float(balance)} AZN əlavə edildi",
             initial_balance=initial_balance,
             subsequent_balance=subsequent_balance,
             holding_initial_balance=holding_initial_balance,
@@ -92,7 +92,7 @@ class UpdateHoldingCashbox(graphene.Mutation):
 
         create_cash_flow(
             holding=holding_cashbox.holding,
-            description=f"{holding_cashbox.holding.name} holdinq kassasına {float(balance)} AZN əlavə edildi",
+            description=f"{holding_cashbox.holding.name} holdinq cashboxsına {float(balance)} AZN əlavə edildi",
             initial_balance=initial_balance,
             subsequent_balance=subsequent_balance,
             holding_initial_balance=holding_initial_balance,

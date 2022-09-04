@@ -11,7 +11,7 @@ from company.models import (
 
 
 def resolve_holding(id):
-    return Holding.objects.filter(id=id).first()
+    return Holding.objects.get(id=id)
 
 
 def resolve_holdings():
@@ -19,7 +19,7 @@ def resolve_holdings():
 
 
 def resolve_company(id):
-    return Company.objects.select_related('holding').filter(id=id).first()
+    return Company.objects.select_related('holding').get(id=id)
 
 
 def resolve_companies():
@@ -27,7 +27,7 @@ def resolve_companies():
 
 
 def resolve_office(id):
-    return Office.objects.select_related('company').filter(id=id).first()
+    return Office.objects.select_related('company').get(id=id)
 
 
 def resolve_offices():
@@ -35,7 +35,7 @@ def resolve_offices():
 
 
 def resolve_department(id):
-    return Department.objects.select_related('office').filter(id=id).first()
+    return Department.objects.select_related('office').get(id=id)
 
 
 def resolve_departments():
@@ -43,7 +43,7 @@ def resolve_departments():
 
 
 def resolve_position(id):
-    return Position.objects.filter(id=id).first()
+    return Position.objects.get(id=id)
 
 
 def resolve_positions():
@@ -51,7 +51,7 @@ def resolve_positions():
 
 
 def resolve_team(id):
-    return Team.objects.filter(id=id).first()
+    return Team.objects.get(id=id)
 
 
 def resolve_teams():
@@ -59,7 +59,7 @@ def resolve_teams():
 
 
 def resolve_permission_for_position(id):
-    return PermissionForPosition.objects.select_related('position', 'permission_group').filter(id=id).first()
+    return PermissionForPosition.objects.select_related('position', 'permission_group').get(id=id)
 
 
 def resolve_permission_for_positions():
@@ -67,7 +67,7 @@ def resolve_permission_for_positions():
 
 
 def resolve_app_logo(id):
-    return AppLogo.objects.filter(id=id).first()
+    return AppLogo.objects.get(id=id)
 
 
 def resolve_app_logos():

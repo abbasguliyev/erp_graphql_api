@@ -101,9 +101,9 @@ class OfficeWorkingDay(AbstractWorkingDays):
         default_permissions = []
         permissions = (
             ("view_officeworkingday", "Mövcud ofis tətil günlərinə baxa bilər"),
-            ("add_officeworkingday", "Ofis tətil günü əlavə edə bilər"),
-            ("change_officeworkingday", "Ofisin tətil günü məlumatlarını yeniləyə bilər"),
-            ("delete_officeworkingday", "Ofisin tətil gününü silə bilər")
+            ("add_officeworkingday", "Office tətil günü əlavə edə bilər"),
+            ("change_officeworkingday", "Officein tətil günü məlumatlarını yeniləyə bilər"),
+            ("delete_officeworkingday", "Officein tətil gününü silə bilər")
         )
 
     def __str__(self) -> str:
@@ -200,9 +200,9 @@ class OfficeExceptionWorker(ExceptionWorker):
         default_permissions = []
         permissions = (
             ("view_officeexceptionworker", "Mövcud ofis istisna işçilərə baxa bilər"),
-            ("add_officeexceptionworker", "Ofis istisna işçi əlavə edə bilər"),
-            ("change_officeexceptionworker", "Ofis istisna işçi məlumatlarını yeniləyə bilər"),
-            ("delete_officeexceptionworker", "Ofis istisna işçiməlumatalrını silə bilər")
+            ("add_officeexceptionworker", "Office istisna işçi əlavə edə bilər"),
+            ("change_officeexceptionworker", "Office istisna işçi məlumatlarını yeniləyə bilər"),
+            ("delete_officeexceptionworker", "Office istisna işçiməlumatalrını silə bilər")
         )
 
     def __str__(self) -> str:

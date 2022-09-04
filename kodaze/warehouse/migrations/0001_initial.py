@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('pk',),
-                'permissions': (('view_stock', 'Mövcud stoklara baxa bilər'), ('add_stock', 'Stok əlavə edə bilər'), ('change_stock', 'Stok məlumatlarını yeniləyə bilər'), ('delete_stock', 'Stok silə bilər')),
+                'permissions': (('view_stock', 'Mövcud stocklara baxa bilər'), ('add_stock', 'Stok əlavə edə bilər'), ('change_stock', 'Stok məlumatlarını yeniləyə bilər'), ('delete_stock', 'Stok silə bilər')),
                 'default_permissions': [],
             },
         ),
@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 ('product_and_quantity', models.CharField(blank=True, max_length=500, null=True)),
                 ('note', models.TextField(blank=True, default='', null=True)),
                 ('operation_date', models.DateField(auto_now_add=True, null=True)),
-                ('operation_type', models.CharField(choices=[('transfer', 'transfer'), ('stok yeniləmə', 'stok yeniləmə')], default='transfer', max_length=50)),
+                ('operation_type', models.CharField(choices=[('transfer', 'transfer'), ('stock yeniləmə', 'stock yeniləmə')], default='transfer', max_length=50)),
                 ('quantity', models.IntegerField(blank=True, default=0, null=True)),
                 ('executor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='operations', to=settings.AUTH_USER_MODEL)),
                 ('receiving_warehouse', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='receiving_warehouse', to='warehouse.warehouse')),

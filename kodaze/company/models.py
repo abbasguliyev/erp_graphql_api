@@ -61,9 +61,9 @@ class Office(AbstractCompany):
         default_permissions = []
         permissions = (
             ("view_office", "Mövcud ofislərə baxa bilər"),
-            ("add_office", "Ofis əlavə edə bilər"),
-            ("change_office", "Ofis məlumatlarını yeniləyə bilər"),
-            ("delete_office", "Ofis silə bilər")
+            ("add_office", "Office əlavə edə bilər"),
+            ("change_office", "Office məlumatlarını yeniləyə bilər"),
+            ("delete_office", "Office silə bilər")
         )
 
     def __str__(self) -> str:

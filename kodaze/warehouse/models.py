@@ -80,7 +80,7 @@ class Stock(models.Model):
         ]
         default_permissions = []
         permissions = (
-            ("view_stock", "Mövcud stoklara baxa bilər"),
+            ("view_stock", "Mövcud stocklara baxa bilər"),
             ("add_stock", "Stok əlavə edə bilər"),
             ("change_stock", "Stok məlumatlarını yeniləyə bilər"),
             ("delete_stock", "Stok silə bilər")
