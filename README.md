@@ -1,4 +1,4 @@
-# kodazeCRM
+# ERP GRAPHQL API
 
 ## Install
 git clone https://github.com/abbasguliyev/erp_graphql_api.git \
